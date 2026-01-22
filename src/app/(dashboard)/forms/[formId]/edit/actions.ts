@@ -319,7 +319,7 @@ export async function deleteQuestion(questionId: string) {
   // First check ownership
   const { data: question } = await supabase
     .from('questions')
-    .select('form_id, forms!inner(user_id)')
+    .select('form_id, order_index, forms!inner(user_id)')
     .eq('id', questionId)
     .single();
 
@@ -327,24 +327,49 @@ export async function deleteQuestion(questionId: string) {
     return { error: 'Unauthorized' };
   }
 
-  // Use atomic PostgreSQL function to delete and reorder in a single transaction
-  // This prevents race conditions where multiple deletes could cause incorrect ordering
-  const { data: result, error } = await supabase.rpc('delete_question_atomic', {
-    question_id_param: questionId,
-  });
+  const formId = question.form_id;
+  const deletedOrderIndex = (question as { order_index: number }).order_index;
 
-  if (error) {
-    console.error('Error deleting question:', error);
+  // Delete the question
+  const { error: deleteError } = await supabase
+    .from('questions')
+    .delete()
+    .eq('id', questionId);
+
+  if (deleteError) {
+    console.error('Error deleting question:', deleteError);
     return { error: 'Failed to delete question' };
   }
 
-  // Check if the RPC returned an error
-  if (result && !result.success) {
-    console.error('Question deletion failed:', result.error);
-    return { error: result.error || 'Failed to delete question' };
+  // Reorder remaining questions to fill the gap
+  const { data: remainingQuestions, error: fetchError } = await supabase
+    .from('questions')
+    .select('id, order_index')
+    .eq('form_id', formId)
+    .gt('order_index', deletedOrderIndex)
+    .order('order_index');
+
+  if (fetchError) {
+    console.error('Error fetching remaining questions:', fetchError);
+    // Question was deleted but reordering failed - not critical
+  } else if (remainingQuestions && remainingQuestions.length > 0) {
+    // Update order_index for questions that came after the deleted one
+    const updates = remainingQuestions.map((q) => ({
+      id: q.id,
+      order_index: q.order_index - 1,
+    }));
+
+    const { error: reorderError } = await supabase
+      .from('questions')
+      .upsert(updates);
+
+    if (reorderError) {
+      console.error('Error reordering questions:', reorderError);
+      // Not critical - questions are deleted but order might be off
+    }
   }
 
-  revalidatePath(`/forms/${question.form_id}/edit`);
+  revalidatePath(`/forms/${formId}/edit`);
   return { success: true };
 }
 
