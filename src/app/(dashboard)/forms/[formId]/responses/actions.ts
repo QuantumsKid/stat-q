@@ -1,0 +1,280 @@
+'use server';
+
+import { createClient } from '@/utils/supabase/server';
+import type { Response, Answer, ResponseWithAnswers } from '@/lib/types/response.types';
+
+interface ResponseData {
+  id: string;
+  form_id: string;
+  respondent_email: string | null;
+  is_complete: boolean;
+  started_at: string;
+  submitted_at: string | null;
+  created_at: string;
+  updated_at: string;
+  answers: Array<{
+    id: string;
+    response_id: string;
+    question_id: string;
+    value: unknown;
+    created_at: string;
+    updated_at: string;
+  }>;
+}
+
+/**
+ * Get all responses for a form (with authorization check)
+ */
+export async function getFormResponses(formId: string) {
+  const supabase = await createClient();
+
+  // Check authorization
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) {
+    return { error: 'Unauthorized' };
+  }
+
+  // Verify user owns the form
+  const { data: form, error: formError } = await supabase
+    .from('forms')
+    .select('user_id')
+    .eq('id', formId)
+    .single();
+
+  if (formError || !form || form.user_id !== user.id) {
+    return { error: 'Form not found or unauthorized' };
+  }
+
+  // Fetch responses with answers (exclude soft-deleted by default)
+  const { data: responses, error } = await supabase
+    .from('responses')
+    .select(`
+      *,
+      answers (*)
+    `)
+    .eq('form_id', formId)
+    .is('deleted_at', null)
+    .order('created_at', { ascending: false });
+
+  if (error) {
+    console.error('Error fetching responses:', error);
+    return { error: 'Failed to fetch responses' };
+  }
+
+  return { data: responses as unknown as ResponseData[] };
+}
+
+/**
+ * Get a single response by ID (with authorization check)
+ */
+export async function getResponseById(responseId: string) {
+  const supabase = await createClient();
+
+  // Check authorization
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) {
+    return { error: 'Unauthorized' };
+  }
+
+  // Fetch response with answers
+  const { data: response, error } = await supabase
+    .from('responses')
+    .select(`
+      *,
+      answers (*),
+      forms!inner (user_id)
+    `)
+    .eq('id', responseId)
+    .single();
+
+  if (error || !response) {
+    console.error('Error fetching response:', error);
+    return { error: 'Response not found' };
+  }
+
+  // Check if user owns the form
+  interface ResponseWithForm extends ResponseData {
+    forms: { user_id: string };
+  }
+
+  const responseWithForm = response as unknown as ResponseWithForm;
+  if (responseWithForm.forms.user_id !== user.id) {
+    return { error: 'Unauthorized' };
+  }
+
+  return { data: response as unknown as ResponseData };
+}
+
+/**
+ * Get response statistics for a form
+ */
+export async function getResponseStats(formId: string) {
+  const supabase = await createClient();
+
+  // Check authorization
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) {
+    return { error: 'Unauthorized' };
+  }
+
+  // Verify user owns the form
+  const { data: form, error: formError } = await supabase
+    .from('forms')
+    .select('user_id')
+    .eq('id', formId)
+    .single();
+
+  if (formError || !form || form.user_id !== user.id) {
+    return { error: 'Form not found or unauthorized' };
+  }
+
+  // Get total responses count (exclude soft-deleted)
+  const { count: totalCount, error: totalError } = await supabase
+    .from('responses')
+    .select('*', { count: 'exact', head: true })
+    .eq('form_id', formId)
+    .is('deleted_at', null);
+
+  if (totalError) {
+    console.error('Error fetching total responses:', totalError);
+    return { error: 'Failed to fetch statistics' };
+  }
+
+  // Get completed responses count (exclude soft-deleted)
+  const { count: completedCount, error: completedError } = await supabase
+    .from('responses')
+    .select('*', { count: 'exact', head: true })
+    .eq('form_id', formId)
+    .eq('is_complete', true)
+    .is('deleted_at', null);
+
+  if (completedError) {
+    console.error('Error fetching completed responses:', completedError);
+    return { error: 'Failed to fetch statistics' };
+  }
+
+  // Get responses for completion time calculation (exclude soft-deleted)
+  const { data: responses, error: responsesError } = await supabase
+    .from('responses')
+    .select('started_at, submitted_at')
+    .eq('form_id', formId)
+    .eq('is_complete', true)
+    .is('deleted_at', null);
+
+  if (responsesError) {
+    console.error('Error fetching response times:', responsesError);
+    return { error: 'Failed to fetch statistics' };
+  }
+
+  return {
+    data: {
+      totalResponses: totalCount || 0,
+      completedResponses: completedCount || 0,
+      incompleteResponses: (totalCount || 0) - (completedCount || 0),
+      responses: responses || [],
+    },
+  };
+}
+
+/**
+ * Delete a response (with authorization check)
+ */
+export async function deleteResponse(responseId: string) {
+  const supabase = await createClient();
+
+  // Check authorization
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) {
+    return { error: 'Unauthorized' };
+  }
+
+  // Check if user owns the form
+  const { data: response } = await supabase
+    .from('responses')
+    .select(`
+      id,
+      forms!inner (user_id)
+    `)
+    .eq('id', responseId)
+    .single();
+
+  interface ResponseWithForm {
+    id: string;
+    forms: { user_id: string };
+  }
+
+  const responseWithForm = response as unknown as ResponseWithForm;
+  if (!responseWithForm || responseWithForm.forms.user_id !== user.id) {
+    return { error: 'Unauthorized' };
+  }
+
+  // Delete the response (answers will be deleted via cascade)
+  const { error } = await supabase
+    .from('responses')
+    .delete()
+    .eq('id', responseId);
+
+  if (error) {
+    console.error('Error deleting response:', error);
+    return { error: 'Failed to delete response' };
+  }
+
+  return { success: true };
+}
+
+/**
+ * Get answers grouped by question for analytics
+ */
+export async function getAnswersByQuestion(formId: string) {
+  const supabase = await createClient();
+
+  // Check authorization
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) {
+    return { error: 'Unauthorized' };
+  }
+
+  // Verify user owns the form
+  const { data: form, error: formError } = await supabase
+    .from('forms')
+    .select('user_id')
+    .eq('id', formId)
+    .single();
+
+  if (formError || !form || form.user_id !== user.id) {
+    return { error: 'Form not found or unauthorized' };
+  }
+
+  // Fetch all answers for completed responses (exclude soft-deleted)
+  const { data: answers, error } = await supabase
+    .from('answers')
+    .select(`
+      *,
+      responses!inner (
+        is_complete,
+        form_id,
+        deleted_at
+      )
+    `)
+    .eq('responses.form_id', formId)
+    .eq('responses.is_complete', true)
+    .is('responses.deleted_at', null);
+
+  if (error) {
+    console.error('Error fetching answers:', error);
+    return { error: 'Failed to fetch answers' };
+  }
+
+  // Group answers by question_id
+  const answersByQuestion: Record<string, Answer[]> = {};
+
+  (answers as unknown as Array<Answer & { responses: { is_complete: boolean; form_id: string } }>).forEach((answer) => {
+    const questionId = answer.question_id;
+    if (!answersByQuestion[questionId]) {
+      answersByQuestion[questionId] = [];
+    }
+    answersByQuestion[questionId].push(answer);
+  });
+
+  return { data: answersByQuestion };
+}

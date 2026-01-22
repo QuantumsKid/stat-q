@@ -1,0 +1,163 @@
+@import "tailwindcss";
+
+@config "../../tailwind.config.js";
+
+:root {
+  /* Slate color scheme */
+  --background: 0 0% 100%;
+  --foreground: 222.2 47.4% 11.2%;
+  --muted: 220 14.3% 95.9%;
+  --muted-foreground: 220 8.9% 46.1%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 222.2 47.4% 11.2%;
+  --border: 214.3 31.8% 91.4%;
+  --input: 214.3 31.8% 91.4%;
+  --card: 0 0% 100%;
+  --card-foreground: 222.2 47.4% 11.2%;
+  --primary: 215.4 16.3% 46.9%;
+  --primary-foreground: 210 20% 98%;
+  --secondary: 220 14.3% 95.9%;
+  --secondary-foreground: 222.2 47.4% 11.2%;
+  --accent: 220 14.3% 95.9%;
+  --accent-foreground: 222.2 47.4% 11.2%;
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 210 20% 98%;
+  --ring: 222.2 47.4% 11.2%;
+
+  --radius-lg: 0.5rem;
+  --radius-md: calc(0.5rem - 2px);
+  --radius-sm: calc(0.5rem - 4px);
+}
+
+/* Link Styling - Ensure adequate contrast in both light and dark modes */
+a {
+  color: hsl(206 100% 40%); /* Blue-600 equivalent for light mode */
+  text-decoration-line: underline;
+  text-decoration-style: solid;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+  transition: color 0.2s ease-in-out;
+}
+
+a:hover {
+  color: hsl(206 100% 30%); /* Blue-700 equivalent */
+}
+
+a:focus-visible {
+  outline: 2px solid hsl(215.4 16.3% 46.9%);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Reduced Motion Support - Respect user's OS accessibility preference */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Print Stylesheet - Optimized for printing forms and analytics */
+@media print {
+  /* Reset colors for better printing */
+  * {
+    background: white !important;
+    color: black !important;
+    box-shadow: none !important;
+  }
+
+  /* Hide navigation, buttons, and interactive elements */
+  nav,
+  button,
+  .no-print,
+  [role="navigation"],
+  [role="banner"],
+  header,
+  footer {
+    display: none !important;
+  }
+
+  /* Ensure content uses full width */
+  body {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Optimize page breaks */
+  h1, h2, h3, h4, h5, h6 {
+    page-break-after: avoid;
+    page-break-inside: avoid;
+  }
+
+  table, figure, img {
+    page-break-inside: avoid;
+  }
+
+  /* Add page breaks before major sections */
+  .page-break-before {
+    page-break-before: always;
+  }
+
+  /* Ensure links show their URLs */
+  a[href]:after {
+    content: " (" attr(href) ")";
+    font-size: 0.8em;
+    color: #666;
+  }
+
+  /* Don't show URLs for internal navigation */
+  a[href^="#"]:after,
+  a[href^="/"]:after {
+    content: "";
+  }
+
+  /* Chart and visualization adjustments */
+  svg {
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* Table styling for better readability */
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 1em 0;
+  }
+
+  th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+
+  th {
+    background-color: #f5f5f5 !important;
+    font-weight: bold;
+  }
+
+  /* Form questions styling */
+  .question-item {
+    margin-bottom: 1.5em;
+    page-break-inside: avoid;
+  }
+
+  /* Analytics cards */
+  .analytics-card {
+    border: 1px solid #ddd;
+    padding: 1em;
+    margin-bottom: 1em;
+    page-break-inside: avoid;
+  }
+
+  /* Hide decorative elements */
+  .backdrop-blur,
+  .glassmorphism {
+    backdrop-filter: none !important;
+    background: white !important;
+  }
+}
