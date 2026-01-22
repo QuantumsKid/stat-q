@@ -52,6 +52,13 @@ export function QuestionItem({
   };
 
   const config = QUESTION_TYPE_CONFIG[question.type];
+
+  // Safety check: if config is undefined, return null to prevent crash
+  if (!config) {
+    console.error(`Unknown question type: ${question.type}`);
+    return null;
+  }
+
   const Icon = config.icon;
 
   return (
