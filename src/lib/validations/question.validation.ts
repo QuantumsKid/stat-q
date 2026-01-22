@@ -14,6 +14,9 @@ export const questionBaseSchema = z.object({
     'linear_scale',
     'matrix',
     'date_time',
+    'file_upload',
+    'ranking',
+    'slider',
   ]),
 });
 
@@ -93,6 +96,43 @@ export const dateTimeOptionsSchema = z.object({
   format: z.string().optional(),
 });
 
+// File upload options
+export const fileUploadOptionsSchema = z.object({
+  maxFileSize: z.number().positive().optional(), // in MB
+  allowedFileTypes: z.array(z.string()).optional(), // e.g., ['image/*', 'application/pdf']
+  maxFiles: z.number().int().positive().optional(), // Maximum number of files
+  acceptedExtensions: z.string().optional(), // e.g., '.pdf,.doc,.docx'
+});
+
+// Ranking item schema
+export const rankingItemSchema = z.object({
+  id: z.string(),
+  label: z.string().min(1, 'Ranking item label is required'),
+});
+
+// Ranking options
+export const rankingOptionsSchema = z.object({
+  items: z.array(rankingItemSchema).min(2, 'At least two items are required for ranking'),
+  minRank: z.number().int().positive().optional(), // Minimum number of items to rank
+  maxRank: z.number().int().positive().optional(), // Maximum number of items to rank
+});
+
+// Slider options
+export const sliderOptionsSchema = z.object({
+  min: z.number(),
+  max: z.number(),
+  step: z.number().positive().optional(),
+  minLabel: z.string().optional(),
+  maxLabel: z.string().optional(),
+  showValue: z.boolean().optional(), // Show current value as user drags
+  defaultValue: z.number().optional(),
+}).refine(
+  (data) => data.max > data.min,
+  {
+    message: 'Maximum must be greater than minimum',
+  }
+);
+
 // Logic rule schema
 export const logicRuleSchema = z.object({
   id: z.string(),
@@ -123,6 +163,9 @@ export const questionCreateSchema = questionBaseSchema.extend({
     linearScaleOptionsSchema,
     matrixOptionsSchema,
     dateTimeOptionsSchema,
+    fileUploadOptionsSchema,
+    rankingOptionsSchema,
+    sliderOptionsSchema,
   ]).optional(),
   logic_rules: z.array(logicRuleSchema).optional(),
 });
@@ -140,6 +183,9 @@ export const questionUpdateSchema = z.object({
     linearScaleOptionsSchema,
     matrixOptionsSchema,
     dateTimeOptionsSchema,
+    fileUploadOptionsSchema,
+    rankingOptionsSchema,
+    sliderOptionsSchema,
   ]).optional(),
   logic_rules: z.array(logicRuleSchema).optional(),
 });
