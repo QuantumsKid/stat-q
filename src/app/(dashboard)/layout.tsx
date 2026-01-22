@@ -9,8 +9,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { LogOut, User, FileText, Shield } from 'lucide-react';
-import { logout } from '@/app/login/actions';
+import { User, FileText, Shield } from 'lucide-react';
+import { LogoutButton } from '@/components/LogoutButton';
 import Link from 'next/link';
 
 export default async function DashboardLayout({
@@ -82,14 +82,7 @@ export default async function DashboardLayout({
                   <DropdownMenuSeparator />
                 </>
               )}
-              <form action={logout}>
-                <DropdownMenuItem asChild>
-                  <button type="submit" className="w-full flex items-center cursor-pointer">
-                    <LogOut className="mr-2 h-4 w-4" />
-                    <span>Log out</span>
-                  </button>
-                </DropdownMenuItem>
-              </form>
+              <LogoutButton />
             </DropdownMenuContent>
           </DropdownMenu>
         </div>

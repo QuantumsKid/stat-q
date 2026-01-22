@@ -17,7 +17,18 @@
       "Bash(npm run lint)",
       "Bash(taskkill:*)",
       "Bash(git init:*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git config:*)",
+      "Bash(git remote add:*)",
+      "Bash(git branch:*)",
+      "Bash(git push:*)",
+      "Bash(export VERCEL_ORG_ID:*)",
+      "Bash(export VERCEL_PROJECT_ID=\"\")",
+      "Bash(vercel login --token)",
+      "Bash(set VERCEL_TOKEN=yhyfDnCAXvFKoCpImc7EQm3X)",
+      "Bash(vercel:*)",
+      "Bash(printf:*)"
     ]
   }
 }
