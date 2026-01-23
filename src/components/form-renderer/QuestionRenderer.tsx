@@ -36,12 +36,7 @@ import {
   getLinearScaleOptions,
   getMatrixOptions,
   getDateTimeOptions,
-  getFileUploadOptions,
-  getRankingOptions,
-  getSliderOptions,
 } from '@/lib/utils/question-type-guards';
-import { FileUploadInput } from './FileUploadInput';
-import { RankingInput } from './RankingInput';
 
 interface QuestionRendererProps {
   question: Question;
@@ -591,71 +586,6 @@ export function QuestionRenderer({
               </div>
             )}
           </fieldset>
-        );
-      }
-
-      case 'file_upload': {
-        const opts = getFileUploadOptions(options);
-        return (
-          <FileUploadInput
-            questionId={question.id}
-            formId={formId}
-            options={opts}
-            value={effectiveValue}
-            onChange={onChange}
-            error={error}
-            ariaDescribedBy={ariaDescribedBy}
-            required={question.required}
-          />
-        );
-      }
-
-      case 'ranking': {
-        const opts = getRankingOptions(options);
-        return (
-          <RankingInput
-            questionId={question.id}
-            options={opts}
-            value={effectiveValue}
-            onChange={onChange}
-            ariaDescribedBy={ariaDescribedBy}
-          />
-        );
-      }
-
-      case 'slider': {
-        const opts = getSliderOptions(options);
-        const sliderValue = effectiveValue.slider_value ?? opts?.defaultValue ?? (opts?.min || 0 + opts?.max || 100) / 2;
-
-        return (
-          <div className="space-y-4 max-w-md">
-            <div className="flex items-center justify-between text-sm text-slate-600">
-              <span>{opts?.minLabel || opts?.min || 0}</span>
-              <span>{opts?.maxLabel || opts?.max || 100}</span>
-            </div>
-            <input
-              id={`${question.id}-slider`}
-              type="range"
-              min={opts?.min || 0}
-              max={opts?.max || 100}
-              step={opts?.step || 1}
-              value={sliderValue}
-              onChange={(e) => onChange({ slider_value: parseFloat(e.target.value) })}
-              className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-blue-600"
-              aria-labelledby={`${question.id}-title`}
-              aria-describedby={ariaDescribedBy}
-              aria-valuemin={opts?.min || 0}
-              aria-valuemax={opts?.max || 100}
-              aria-valuenow={sliderValue}
-              aria-valuetext={`${sliderValue}`}
-              aria-required={question.required}
-            />
-            {(opts?.showValue ?? true) && (
-              <div className="text-center text-lg font-semibold text-slate-900">
-                {sliderValue}
-              </div>
-            )}
-          </div>
         );
       }
 

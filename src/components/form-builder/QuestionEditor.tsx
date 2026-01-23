@@ -17,9 +17,6 @@ import { DropdownEditor } from './question-types/DropdownEditor';
 import { LinearScaleEditor } from './question-types/LinearScaleEditor';
 import { MatrixEditor } from './question-types/MatrixEditor';
 import { DateTimeEditor } from './question-types/DateTimeEditor';
-import { FileUploadEditor } from './question-types/FileUploadEditor';
-import { RankingEditor } from './question-types/RankingEditor';
-import { SliderEditor } from './question-types/SliderEditor';
 import { LogicBuilder } from './conditional-logic/LogicBuilder';
 import { AdvancedLogicBuilder } from './conditional-logic/AdvancedLogicBuilder';
 import type { LogicRule } from '@/lib/types/question.types';
@@ -200,27 +197,6 @@ export function QuestionEditor({ question, allQuestions, onUpdate }: QuestionEdi
       case 'date_time':
         return (
           <DateTimeEditor
-            options={options}
-            onUpdate={handleOptionsUpdate}
-          />
-        );
-      case 'file_upload':
-        return (
-          <FileUploadEditor
-            options={options}
-            onUpdate={handleOptionsUpdate}
-          />
-        );
-      case 'ranking':
-        return (
-          <RankingEditor
-            options={options}
-            onUpdate={handleOptionsUpdate}
-          />
-        );
-      case 'slider':
-        return (
-          <SliderEditor
             options={options}
             onUpdate={handleOptionsUpdate}
           />

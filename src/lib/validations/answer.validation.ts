@@ -74,24 +74,6 @@ export function validateAnswer(question: Question, value: AnswerValue): Validati
     case 'date_time':
       return validateDateTime(value);
 
-    case 'file_upload':
-      return validateFileUpload(
-        value,
-        getFileUploadOptions(question.options)
-      );
-
-    case 'ranking':
-      return validateRanking(
-        value,
-        getRankingOptions(question.options)
-      );
-
-    case 'slider':
-      return validateSlider(
-        value,
-        getSliderOptions(question.options)
-      );
-
     default:
       return { valid: true }; // Unknown type, skip validation
   }
