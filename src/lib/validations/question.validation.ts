@@ -14,9 +14,6 @@ export const questionBaseSchema = z.object({
     'linear_scale',
     'matrix',
     'date_time',
-    'file_upload',
-    'ranking',
-    'slider',
   ]),
 });
 
@@ -163,9 +160,6 @@ export const questionCreateSchema = questionBaseSchema.extend({
     linearScaleOptionsSchema,
     matrixOptionsSchema,
     dateTimeOptionsSchema,
-    fileUploadOptionsSchema,
-    rankingOptionsSchema,
-    sliderOptionsSchema,
   ]).optional(),
   logic_rules: z.array(logicRuleSchema).optional(),
 });
@@ -183,9 +177,6 @@ export const questionUpdateSchema = z.object({
     linearScaleOptionsSchema,
     matrixOptionsSchema,
     dateTimeOptionsSchema,
-    fileUploadOptionsSchema,
-    rankingOptionsSchema,
-    sliderOptionsSchema,
   ]).optional(),
   logic_rules: z.array(logicRuleSchema).optional(),
 });

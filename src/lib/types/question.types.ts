@@ -10,10 +10,7 @@ export type QuestionType =
   | 'dropdown'
   | 'linear_scale'
   | 'matrix'
-  | 'date_time'
-  | 'file_upload'
-  | 'ranking'
-  | 'slider';
+  | 'date_time';
 
 // Discriminated union types for type-safe questions
 export interface BaseQuestionFields {

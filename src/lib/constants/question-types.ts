@@ -70,27 +70,6 @@ export const QUESTION_TYPE_CONFIG = {
     color: 'text-red-500',
     bgColor: 'bg-red-50',
   },
-  file_upload: {
-    label: 'File Upload',
-    icon: Upload,
-    description: 'Upload files or images',
-    color: 'text-cyan-500',
-    bgColor: 'bg-cyan-50',
-  },
-  ranking: {
-    label: 'Ranking',
-    icon: ListOrdered,
-    description: 'Rank items in order',
-    color: 'text-amber-500',
-    bgColor: 'bg-amber-50',
-  },
-  slider: {
-    label: 'Slider',
-    icon: Sliders,
-    description: 'Continuous scale slider',
-    color: 'text-teal-500',
-    bgColor: 'bg-teal-50',
-  },
 } as const;
 
 export const QUESTION_TYPES: QuestionType[] = [
@@ -102,9 +81,6 @@ export const QUESTION_TYPES: QuestionType[] = [
   'linear_scale',
   'matrix',
   'date_time',
-  'file_upload',
-  'ranking',
-  'slider',
 ];
 
 export function getQuestionTypeConfig(type: QuestionType) {
