@@ -12,6 +12,7 @@ import {
   FileText,
   Archive,
   ArchiveRestore,
+  Share2,
 } from 'lucide-react';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -36,6 +37,7 @@ import {
 import { deleteForm, duplicateForm, archiveForm, unarchiveForm } from '@/app/(dashboard)/actions';
 import { toast } from 'sonner';
 import type { FormWithStats } from '@/lib/types/form.types';
+import { ShareDialog } from '@/components/share/ShareDialog';
 
 interface FormCardProps {
   form: FormWithStats;
@@ -47,6 +49,7 @@ export function FormCard({ form, showArchived = false }: FormCardProps) {
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [isDuplicating, setIsDuplicating] = useState(false);
   const [isArchiving, setIsArchiving] = useState(false);
+  const [showShareDialog, setShowShareDialog] = useState(false);
 
   const handleDelete = async () => {
     setIsDeleting(true);
@@ -134,6 +137,12 @@ export function FormCard({ form, showArchived = false }: FormCardProps) {
                   Edit
                 </Link>
               </DropdownMenuItem>
+              {form.is_published && (
+                <DropdownMenuItem onClick={() => setShowShareDialog(true)}>
+                  <Share2 className="mr-2 h-4 w-4" />
+                  Share
+                </DropdownMenuItem>
+              )}
               <DropdownMenuItem
                 onClick={handleDuplicate}
                 disabled={isDuplicating}
@@ -213,6 +222,13 @@ export function FormCard({ form, showArchived = false }: FormCardProps) {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+
+      <ShareDialog
+        open={showShareDialog}
+        onOpenChange={setShowShareDialog}
+        formId={form.id}
+        formTitle={form.title}
+      />
     </>
   );
 }

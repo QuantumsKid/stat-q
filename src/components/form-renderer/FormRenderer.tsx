@@ -14,9 +14,11 @@ import type { AdvancedLogicRule } from '@/lib/types/advanced-logic.types';
 interface FormRendererProps {
   form: FormWithQuestions;
   mode: 'single' | 'scroll';
+  respondentName?: string;
+  respondentEmail?: string;
 }
 
-export function FormRenderer({ form, mode }: FormRendererProps) {
+export function FormRenderer({ form, mode, respondentName, respondentEmail }: FormRendererProps) {
   const [responseId, setResponseId] = useState<string | null>(null);
   const [answers, setAnswers] = useState<FormResponse>({});
   const [isLoading, setIsLoading] = useState(true);
@@ -66,7 +68,7 @@ export function FormRenderer({ form, mode }: FormRendererProps) {
         return () => clearInterval(checkInterval);
       } else {
         // Start a new response
-        const result = await startResponse(form.id);
+        const result = await startResponse(form.id, respondentEmail);
 
         if (result.error) {
           toast.error(result.error);

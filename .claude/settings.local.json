@@ -28,7 +28,8 @@
       "Bash(vercel login --token)",
       "Bash(set VERCEL_TOKEN=yhyfDnCAXvFKoCpImc7EQm3X)",
       "Bash(vercel:*)",
-      "Bash(printf:*)"
+      "Bash(printf:*)",
+      "Bash(if exist .next rmdir /s /q .next)"
     ]
   }
 }
