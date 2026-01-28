@@ -4,7 +4,7 @@ import { useState, useMemo } from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { ArrowLeft, Download, List, BarChart3, TrendingUp, Sparkles, FlaskConical, LineChart } from 'lucide-react';
+import { ArrowLeft, Download, List, BarChart3, TrendingUp, Sparkles, FlaskConical, LineChart, FileSpreadsheet, ClipboardList } from 'lucide-react';
 import { StatsCards } from './StatsCards';
 import { QuestionAnalytics } from './QuestionAnalytics';
 import { TrendChart } from './TrendChart';
@@ -12,10 +12,13 @@ import { CrossTabulation } from './CrossTabulation';
 import { CorrelationAnalysis } from './CorrelationAnalysis';
 import { HypothesisTesting } from './HypothesisTesting';
 import { RegressionAnalysis } from './RegressionAnalysis';
+import { NeedsAssessmentView } from './NeedsAssessmentView';
 import { DateRangePicker, type DateRange } from './DateRangePicker';
 import { asTypedQuestion } from '@/lib/utils/question-type-guards';
+import { exportResponsesToExcel } from '@/lib/utils/excel-export';
+import { toast } from 'sonner';
 import type { FormWithQuestions } from '@/lib/types/form.types';
-import type { Answer } from '@/lib/types/response.types';
+import type { Answer, ResponseWithAnswers } from '@/lib/types/response.types';
 
 interface AnalyticsDashboardProps {
   form: FormWithQuestions;
@@ -26,12 +29,14 @@ interface AnalyticsDashboardProps {
     incompleteResponses: number;
     responses: Array<{ started_at: string; submitted_at?: string }>;
   };
+  responses: ResponseWithAnswers[];
 }
 
 export function AnalyticsDashboard({
   form,
   answersByQuestion,
   stats,
+  responses,
 }: AnalyticsDashboardProps) {
   // Date range state
   const [dateRange, setDateRange] = useState<DateRange>({
@@ -75,6 +80,44 @@ export function AnalyticsDashboard({
     alert('PDF export coming soon');
   };
 
+  const handleExportExcel = async () => {
+    if (filteredStats.completedResponses === 0) {
+      toast.error('No responses to export');
+      return;
+    }
+
+    try {
+      // Convert filtered responses to the format expected by exportResponsesToExcel
+      const responsesForExport = filteredResponses
+        .filter(r => r.submitted_at)
+        .map(r => ({
+          id: 'response-' + r.submitted_at,
+          respondent_email: null,
+          submitted_at: r.submitted_at || null,
+          is_complete: true,
+          answers: Object.keys(answersByQuestion).flatMap(questionId =>
+            answersByQuestion[questionId]
+              .filter(a => a.created_at >= (r.started_at || r.submitted_at || ''))
+              .map(a => ({
+                question_id: a.question_id,
+                value: a.value ?? a.value_json,
+              }))
+          ),
+        }));
+
+      await exportResponsesToExcel(
+        form.title,
+        form.questions,
+        responsesForExport,
+        answersByQuestion
+      );
+      toast.success(`Exported ${filteredStats.completedResponses} responses to Excel`);
+    } catch (error) {
+      console.error('Excel export error:', error);
+      toast.error('Failed to export to Excel');
+    }
+  };
+
   return (
     <div className="container mx-auto px-4 py-8">
       {/* Header */}
@@ -99,6 +142,10 @@ export function AnalyticsDashboard({
               View Responses
             </Button>
           </Link>
+          <Button variant="outline" onClick={handleExportExcel}>
+            <FileSpreadsheet className="mr-2 h-4 w-4" />
+            Export Excel
+          </Button>
           <Button variant="outline" onClick={handleExportPDF}>
             <Download className="mr-2 h-4 w-4" />
             Export PDF
@@ -124,10 +171,14 @@ export function AnalyticsDashboard({
 
       {/* Tabs for different analytics views */}
       <Tabs defaultValue="overview" className="mt-6">
-        <TabsList className="grid w-full max-w-5xl grid-cols-5">
+        <TabsList className="grid w-full max-w-6xl grid-cols-6">
           <TabsTrigger value="overview" className="flex items-center gap-2">
             <BarChart3 className="h-4 w-4" />
             Overview
+          </TabsTrigger>
+          <TabsTrigger value="needs-assessment" className="flex items-center gap-2">
+            <ClipboardList className="h-4 w-4" />
+            Needs Assessment
           </TabsTrigger>
           <TabsTrigger value="cross-tab" className="flex items-center gap-2">
             <TrendingUp className="h-4 w-4" />
@@ -180,6 +231,15 @@ export function AnalyticsDashboard({
               </div>
             )}
           </div>
+        </TabsContent>
+
+        {/* Needs Assessment Tab */}
+        <TabsContent value="needs-assessment">
+          <NeedsAssessmentView
+            form={form}
+            answersByQuestion={answersByQuestion}
+            responses={responses}
+          />
         </TabsContent>
 
         {/* Cross-Tabulation Tab */}

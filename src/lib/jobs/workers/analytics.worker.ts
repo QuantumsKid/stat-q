@@ -27,8 +27,7 @@ async function calculateFormStats(formId: string): Promise<void> {
       answers (*)
     `)
     .eq('form_id', formId)
-    .eq('is_complete', true)
-    .is('deleted_at', null);
+    .eq('is_complete', true);
 
   if (error) {
     throw new Error(`Failed to fetch responses: ${error.message}`);

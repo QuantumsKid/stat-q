@@ -164,38 +164,35 @@ export async function getResponseStats(formId: string) {
     return { error: 'Form not found or unauthorized' };
   }
 
-  // Get total responses count (exclude soft-deleted)
+  // Get total responses count
   const { count: totalCount, error: totalError } = await supabase
     .from('responses')
     .select('*', { count: 'exact', head: true })
-    .eq('form_id', formId)
-    .is('deleted_at', null);
+    .eq('form_id', formId);
 
   if (totalError) {
     console.error('Error fetching total responses:', totalError);
     return { error: 'Failed to fetch statistics' };
   }
 
-  // Get completed responses count (exclude soft-deleted)
+  // Get completed responses count
   const { count: completedCount, error: completedError } = await supabase
     .from('responses')
     .select('*', { count: 'exact', head: true })
     .eq('form_id', formId)
-    .eq('is_complete', true)
-    .is('deleted_at', null);
+    .eq('is_complete', true);
 
   if (completedError) {
     console.error('Error fetching completed responses:', completedError);
     return { error: 'Failed to fetch statistics' };
   }
 
-  // Get responses for completion time calculation (exclude soft-deleted)
+  // Get responses for completion time calculation
   const { data: responses, error: responsesError } = await supabase
     .from('responses')
     .select('started_at, submitted_at')
     .eq('form_id', formId)
-    .eq('is_complete', true)
-    .is('deleted_at', null);
+    .eq('is_complete', true);
 
   if (responsesError) {
     console.error('Error fetching response times:', responsesError);
@@ -281,7 +278,7 @@ export async function getAnswersByQuestion(formId: string) {
     return { error: 'Form not found or unauthorized' };
   }
 
-  // Fetch all answers for completed responses (exclude soft-deleted)
+  // Fetch all answers for completed responses
   const { data: answers, error } = await supabase
     .from('answers')
     .select(`
@@ -293,12 +290,11 @@ export async function getAnswersByQuestion(formId: string) {
       updated_at,
       responses!inner (
         is_complete,
-        form_id,
-              )
+        form_id
+      )
     `)
     .eq('responses.form_id', formId)
-    .eq('responses.is_complete', true)
-    .is('responses.deleted_at', null);
+    .eq('responses.is_complete', true);
 
   if (error) {
     console.error('Error fetching answers:', error);

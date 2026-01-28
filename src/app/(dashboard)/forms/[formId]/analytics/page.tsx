@@ -1,7 +1,7 @@
 import { redirect } from 'next/navigation';
 import { createClient } from '@/utils/supabase/server';
 import { AnalyticsDashboard } from '@/components/analytics/AnalyticsDashboard';
-import { getAnswersByQuestion, getResponseStats } from '../responses/actions';
+import { getAnswersByQuestion, getResponseStats, getFormResponses } from '../responses/actions';
 
 interface PageProps {
   params: Promise<{ formId: string }>;
@@ -41,9 +41,10 @@ export default async function AnalyticsPage({ params }: PageProps) {
     questions: sortedQuestions,
   };
 
-  // Get answers by question
+  // Get answers by question, stats, and full responses
   const answersResult = await getAnswersByQuestion(formId);
   const statsResult = await getResponseStats(formId);
+  const responsesResult = await getFormResponses(formId);
 
   if (answersResult.error || statsResult.error || !statsResult.data) {
     return (
@@ -59,6 +60,7 @@ export default async function AnalyticsPage({ params }: PageProps) {
         form={formWithQuestions}
         answersByQuestion={answersResult.data || {}}
         stats={statsResult.data}
+        responses={responsesResult.data || []}
       />
     </div>
   );

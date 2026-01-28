@@ -1,11 +1,11 @@
 export interface Response {
   id: string;
   form_id: string;
-  respondent_email?: string;
-  respondent_name?: string;
+  respondent_email?: string | null;
+  respondent_name?: string | null;
   is_complete: boolean;
   started_at: string;
-  submitted_at?: string;
+  submitted_at?: string | null;
   created_at: string;
   updated_at: string;
 }

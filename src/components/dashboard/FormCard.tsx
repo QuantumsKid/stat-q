@@ -13,6 +13,8 @@ import {
   Archive,
   ArchiveRestore,
   Share2,
+  ExternalLink,
+  BarChart3,
 } from 'lucide-react';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -105,14 +107,14 @@ export function FormCard({ form, showArchived = false }: FormCardProps) {
 
   return (
     <>
-      <Card className="group backdrop-blur-sm bg-white/90 border-2 border-slate-200 hover:border-slate-400 hover:shadow-xl transition-all duration-200">
+      <Card className="group backdrop-blur-sm bg-white/90 border-2 border-slate-200 hover:border-blue-400 hover:shadow-xl transition-all duration-200">
         <CardHeader className="flex flex-row items-start justify-between space-y-0 pb-3">
           <div className="flex-1 space-y-1">
-            <Link href={`/forms/${form.id}/edit`} className="block">
-              <h3 className="font-semibold text-lg leading-none tracking-tight text-slate-900 group-hover:text-slate-700 transition-colors line-clamp-2">
+            <div className="block">
+              <h3 className="font-semibold text-lg leading-none tracking-tight text-slate-900 transition-colors line-clamp-2">
                 {form.title}
               </h3>
-            </Link>
+            </div>
             {form.description && (
               <p className="text-sm text-slate-600 line-clamp-2">
                 {form.description}
@@ -132,17 +134,43 @@ export function FormCard({ form, showArchived = false }: FormCardProps) {
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuItem asChild>
-                <Link href={`/forms/${form.id}/edit`} className="cursor-pointer">
-                  <Edit className="mr-2 h-4 w-4" />
-                  Edit
+                <Link href={`/forms/${form.id}/submit`} className="cursor-pointer">
+                  <ExternalLink className="mr-2 h-4 w-4" />
+                  View Form
                 </Link>
               </DropdownMenuItem>
-              {form.is_published && (
-                <DropdownMenuItem onClick={() => setShowShareDialog(true)}>
-                  <Share2 className="mr-2 h-4 w-4" />
-                  Share
+              <DropdownMenuItem asChild>
+                <Link href={`/forms/${form.id}/edit`} className="cursor-pointer">
+                  <Edit className="mr-2 h-4 w-4" />
+                  Edit Form
+                </Link>
+              </DropdownMenuItem>
+              {form.responseCount > 0 && (
+                <DropdownMenuItem asChild>
+                  <Link href={`/forms/${form.id}/responses`} className="cursor-pointer">
+                    <Eye className="mr-2 h-4 w-4" />
+                    View Responses
+                  </Link>
                 </DropdownMenuItem>
               )}
+              {form.responseCount > 0 && (
+                <DropdownMenuItem asChild>
+                  <Link href={`/forms/${form.id}/analytics`} className="cursor-pointer">
+                    <BarChart3 className="mr-2 h-4 w-4" />
+                    Analytics
+                  </Link>
+                </DropdownMenuItem>
+              )}
+              {form.is_published && (
+                <>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={() => setShowShareDialog(true)}>
+                    <Share2 className="mr-2 h-4 w-4" />
+                    Share
+                  </DropdownMenuItem>
+                </>
+              )}
+              <DropdownMenuSeparator />
               <DropdownMenuItem
                 onClick={handleDuplicate}
                 disabled={isDuplicating}
@@ -150,7 +178,6 @@ export function FormCard({ form, showArchived = false }: FormCardProps) {
                 <Copy className="mr-2 h-4 w-4" />
                 {isDuplicating ? 'Duplicating...' : 'Duplicate'}
               </DropdownMenuItem>
-              <DropdownMenuSeparator />
               {!showArchived && (
                 <DropdownMenuItem
                   onClick={handleArchive}
@@ -169,6 +196,7 @@ export function FormCard({ form, showArchived = false }: FormCardProps) {
                   {isArchiving ? 'Restoring...' : 'Restore'}
                 </DropdownMenuItem>
               )}
+              <DropdownMenuSeparator />
               <DropdownMenuItem
                 onClick={() => setShowDeleteDialog(true)}
                 className="text-red-600"
@@ -180,7 +208,7 @@ export function FormCard({ form, showArchived = false }: FormCardProps) {
           </DropdownMenu>
         </CardHeader>
         <CardContent>
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-4 text-sm text-slate-600">
               <div className="flex items-center gap-1">
                 <FileText className="h-4 w-4" />
@@ -195,6 +223,30 @@ export function FormCard({ form, showArchived = false }: FormCardProps) {
               {form.is_published ? 'Published' : 'Draft'}
             </Badge>
           </div>
+
+          {/* Action Buttons */}
+          <div className="flex items-center gap-2">
+            <Link href={`/forms/${form.id}/submit`} className="flex-1">
+              <Button variant="outline" size="sm" className="w-full">
+                <ExternalLink className="mr-2 h-4 w-4" />
+                View Form
+              </Button>
+            </Link>
+            <Link href={`/forms/${form.id}/edit`} className="flex-1">
+              <Button variant="default" size="sm" className="w-full">
+                <Edit className="mr-2 h-4 w-4" />
+                Edit
+              </Button>
+            </Link>
+            {form.responseCount > 0 && (
+              <Link href={`/forms/${form.id}/responses`}>
+                <Button variant="outline" size="sm">
+                  <BarChart3 className="h-4 w-4" />
+                </Button>
+              </Link>
+            )}
+          </div>
+
           <div className="mt-3 text-xs text-slate-500">
             Updated {formatDistanceToNow(new Date(form.updated_at), { addSuffix: true })}
           </div>

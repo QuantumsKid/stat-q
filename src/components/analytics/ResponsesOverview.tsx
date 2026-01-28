@@ -20,12 +20,13 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Input } from '@/components/ui/input';
-import { ArrowLeft, Download, MoreVertical, Trash2, Eye, BarChart3, Search } from 'lucide-react';
+import { ArrowLeft, Download, MoreVertical, Trash2, Eye, BarChart3, Search, FileSpreadsheet } from 'lucide-react';
 import { format } from 'date-fns';
 import { toast } from 'sonner';
 import { deleteResponse } from '@/app/(dashboard)/forms/[formId]/responses/actions';
 import { StatsCards } from './StatsCards';
 import { exportResponsesToCSV } from '@/lib/utils/csv-export';
+import { exportResponsesToExcel } from '@/lib/utils/excel-export';
 import type { FormWithQuestions } from '@/lib/types/form.types';
 
 interface ResponseData {
@@ -87,6 +88,24 @@ export function ResponsesOverview({ form, responses, stats }: ResponsesOverviewP
     toast.success(`Exported ${completeResponses.length} responses to CSV`);
   };
 
+  const handleExportExcel = async () => {
+    // Only export complete responses
+    const completeResponses = responses.filter((r) => r.is_complete);
+
+    if (completeResponses.length === 0) {
+      toast.error('No complete responses to export');
+      return;
+    }
+
+    try {
+      await exportResponsesToExcel(form.title, form.questions, completeResponses);
+      toast.success(`Exported ${completeResponses.length} responses to Excel`);
+    } catch (error) {
+      console.error('Excel export error:', error);
+      toast.error('Failed to export to Excel');
+    }
+  };
+
   // Filter responses
   const filteredResponses = responses.filter((response) => {
     // Filter by status
@@ -122,15 +141,17 @@ export function ResponsesOverview({ form, responses, stats }: ResponsesOverviewP
         </div>
 
         <div className="flex items-center gap-3">
-          <Link href={`/forms/${form.id}/analytics`}>
-            <Button variant="outline">
-              <BarChart3 className="mr-2 h-4 w-4" />
-              Analytics
-            </Button>
-          </Link>
+          <Button variant="outline" onClick={() => router.push(`/forms/${form.id}/analytics`)}>
+            <BarChart3 className="mr-2 h-4 w-4" />
+            Analytics
+          </Button>
           <Button variant="outline" onClick={handleExportCSV}>
             <Download className="mr-2 h-4 w-4" />
             Export CSV
+          </Button>
+          <Button variant="outline" onClick={handleExportExcel}>
+            <FileSpreadsheet className="mr-2 h-4 w-4" />
+            Export Excel
           </Button>
         </div>
       </nav>

@@ -64,15 +64,13 @@ export async function GET(
     const { count: totalResponses } = await supabase
       .from('responses')
       .select('*', { count: 'exact', head: true })
-      .eq('form_id', formId)
-      .is('deleted_at', null);
+      .eq('form_id', formId);
 
     const { count: completedResponses } = await supabase
       .from('responses')
       .select('*', { count: 'exact', head: true })
       .eq('form_id', formId)
-      .eq('is_complete', true)
-      .is('deleted_at', null);
+      .eq('is_complete', true);
 
     // Get recent responses (last 7 days)
     const sevenDaysAgo = new Date();
@@ -82,8 +80,7 @@ export async function GET(
       .from('responses')
       .select('created_at')
       .eq('form_id', formId)
-      .gte('created_at', sevenDaysAgo.toISOString())
-      .is('deleted_at', null);
+      .gte('created_at', sevenDaysAgo.toISOString());
 
     // Group by day
     const responsesByDay: Record<string, number> = {};

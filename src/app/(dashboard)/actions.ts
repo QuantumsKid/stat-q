@@ -23,13 +23,14 @@ export async function getForms(includeArchived = false): Promise<FormWithStats[]
     throw new Error('Unauthorized');
   }
 
-  // Get forms with question count, excluding archived by default
+  // Get forms with question count and response count, excluding archived by default
   let query = supabase
     .from('forms')
     .select(
       `
       *,
-      questions:questions(count)
+      questions:questions(count),
+      responses:responses(count)
     `
     )
     .eq('user_id', user.id);
@@ -47,11 +48,11 @@ export async function getForms(includeArchived = false): Promise<FormWithStats[]
   }
   console.log('[getForms] Successfully fetched forms:', forms?.length);
 
-  // Transform the data to include question count
+  // Transform the data to include question count and response count
   return (forms || []).map((form) => ({
     ...form,
     questionCount: form.questions?.[0]?.count || 0,
-    responseCount: 0, // Will be implemented in Phase 3
+    responseCount: form.responses?.[0]?.count || 0,
   }));
 }
 
