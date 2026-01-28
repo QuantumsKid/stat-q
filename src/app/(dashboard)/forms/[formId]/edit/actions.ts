@@ -303,7 +303,35 @@ export async function updateQuestion(questionId: string, updates: QuestionUpdate
     return { error: 'Failed to update question' };
   }
 
-  revalidatePath(`/forms/${question.form_id}/edit`);
+  // Verify options persisted if they were sent
+  if (validation.data.options && data) {
+    const sentOptions = validation.data.options;
+    const receivedOptions = data.options;
+
+    // Check if options structure matches
+    if ('choices' in sentOptions && (!receivedOptions || !('choices' in receivedOptions))) {
+      console.error('[updateQuestion] Options not persisted to database:', {
+        questionId,
+        sent: sentOptions,
+        received: receivedOptions
+      });
+      return {
+        error: 'Options failed to persist to database. Please check validation schema.'
+      };
+    }
+
+    // Verify choices array length
+    if ('choices' in sentOptions && 'choices' in receivedOptions) {
+      if (sentOptions.choices.length !== receivedOptions.choices.length) {
+        console.error('[updateQuestion] Choices count mismatch:', {
+          sent: sentOptions.choices.length,
+          received: receivedOptions.choices.length
+        });
+      }
+    }
+  }
+
+  // Removed revalidatePath - let client handle updates optimistically to avoid race conditions
   return { data };
 }
 

@@ -151,9 +151,24 @@ export function FormBuilder({ form: initialForm }: FormBuilderProps) {
 
   const handleUpdateQuestion = (updates: Partial<Question>) => {
     setQuestions(
-      questions.map((q) =>
-        q.id === selectedQuestionId ? { ...q, ...updates } : q
-      )
+      questions.map((q) => {
+        if (q.id === selectedQuestionId) {
+          // Merge updates but preserve all fields from server response
+          const updated = { ...q, ...updates };
+
+          // Log for debugging if options are lost
+          if (updates.options && !updated.options) {
+            console.error('[FormBuilder] Options lost during merge:', {
+              questionId: q.id,
+              sentOptions: updates.options,
+              resultOptions: updated.options
+            });
+          }
+
+          return updated;
+        }
+        return q;
+      })
     );
   };
 

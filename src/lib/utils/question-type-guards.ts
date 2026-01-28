@@ -135,8 +135,13 @@ export function getLongTextOptions(options: QuestionOptions | undefined): LongTe
  * Helper to safely get choice options with defaults
  */
 export function getChoiceOptions(options: QuestionOptions | undefined): ChoiceOptions {
-  if (!options) return { choices: [] };
+  if (!options) {
+    console.warn('[getChoiceOptions] Options undefined, returning empty choices');
+    return { choices: [] };
+  }
   if (hasChoiceShape(options)) return options;
+
+  console.warn('[getChoiceOptions] Options exist but not choice shape:', options);
   return { choices: [] };
 }
 

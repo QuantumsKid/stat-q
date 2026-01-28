@@ -73,14 +73,39 @@ export function QuestionEditor({ question, allQuestions, onUpdate }: QuestionEdi
 
   // Handle options updates
   const handleOptionsUpdate = async (newOptions: QuestionOptions) => {
+    // Optimistic update
     setOptions(newOptions);
+
     const result = await updateQuestion(question.id, { options: newOptions });
+
     if (result.error) {
+      // Revert on error
+      setOptions(question.options || {});
       toast.error(result.error);
-    } else if (result.data) {
-      onUpdate({ options: result.data.options });
-      toast.success('Saved', { duration: 1000 });
+      return;
     }
+
+    if (!result.data) {
+      console.error('[QuestionEditor] Server returned no data');
+      setOptions(question.options || {});
+      toast.error('Failed to save: Server returned no data');
+      return;
+    }
+
+    // Verify options persisted
+    if (!result.data.options || (result.data.options && 'choices' in newOptions && !('choices' in result.data.options))) {
+      console.error('[QuestionEditor] Options missing in server response:', {
+        sent: newOptions,
+        received: result.data.options
+      });
+      setOptions(question.options || {});
+      toast.error('Options failed to save - please try again');
+      return;
+    }
+
+    // Update parent with FULL question object from server
+    onUpdate(result.data);
+    toast.success('Saved', { duration: 1000 });
   };
 
   // Handle logic rules updates
