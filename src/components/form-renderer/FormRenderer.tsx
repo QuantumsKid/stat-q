@@ -43,7 +43,10 @@ export function FormRenderer({ form, mode, respondentName, respondentEmail }: Fo
       const savedResponseId = isLocalStorageAvailable ? localStorage.getItem(`response_${form.id}`) : null;
 
       if (savedResponseId) {
+        console.log('[FormRenderer] Found saved response ID:', savedResponseId);
         setResponseId(savedResponseId);
+        setIsLoading(false);
+
         // Periodically check if localStorage is still available
         const checkInterval = setInterval(() => {
           try {
@@ -68,11 +71,15 @@ export function FormRenderer({ form, mode, respondentName, respondentEmail }: Fo
         return () => clearInterval(checkInterval);
       } else {
         // Start a new response
+        console.log('[FormRenderer] Starting new response with:', { respondentName, respondentEmail });
         const result = await startResponse(form.id, respondentEmail, respondentName);
 
         if (result.error) {
+          console.error('[FormRenderer] Error starting response:', result.error);
           toast.error(result.error);
+          setIsLoading(false);
         } else if (result.data) {
+          console.log('[FormRenderer] Response created:', result.data.id);
           setResponseId(result.data.id);
           if (isLocalStorageAvailable) {
             try {
@@ -84,10 +91,12 @@ export function FormRenderer({ form, mode, respondentName, respondentEmail }: Fo
               );
             }
           }
+          setIsLoading(false);
+        } else {
+          console.error('[FormRenderer] No error but no data returned');
+          setIsLoading(false);
         }
       }
-
-      setIsLoading(false);
     };
 
     initializeResponse();

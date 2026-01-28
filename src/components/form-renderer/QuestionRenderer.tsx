@@ -66,6 +66,14 @@ export function QuestionRenderer({
   const renderQuestionInput = () => {
     const options = question.options;
 
+    console.log('[QuestionRenderer] Rendering question:', {
+      id: question.id,
+      type: question.type,
+      title: question.title,
+      hasOptions: !!options,
+      options: options
+    });
+
     switch (question.type) {
       case 'short_text': {
         const opts = getShortTextOptions(options);
@@ -109,6 +117,13 @@ export function QuestionRenderer({
 
       case 'multiple_choice': {
         const opts = getChoiceOptions(options);
+        if (!opts.choices || opts.choices.length === 0) {
+          return (
+            <p className="text-sm text-amber-600 bg-amber-50 border border-amber-200 rounded p-3">
+              ⚠️ This question has no choices configured. The form owner needs to add options.
+            </p>
+          );
+        }
         return (
           <RadioGroup
             value={effectiveValue.choice_id || ''}
@@ -148,6 +163,13 @@ export function QuestionRenderer({
 
       case 'checkboxes': {
         const opts = getChoiceOptions(options);
+        if (!opts.choices || opts.choices.length === 0) {
+          return (
+            <p className="text-sm text-amber-600 bg-amber-50 border border-amber-200 rounded p-3">
+              ⚠️ This question has no choices configured. The form owner needs to add options.
+            </p>
+          );
+        }
         const selectedIds = effectiveValue.choice_ids || [];
 
         const handleCheckboxChange = (choiceId: string, checked: boolean) => {
@@ -224,6 +246,13 @@ export function QuestionRenderer({
 
       case 'dropdown': {
         const opts = getChoiceOptions(options);
+        if (!opts.choices || opts.choices.length === 0) {
+          return (
+            <p className="text-sm text-amber-600 bg-amber-50 border border-amber-200 rounded p-3">
+              ⚠️ This question has no choices configured. The form owner needs to add options.
+            </p>
+          );
+        }
         return (
           <div className="space-y-3">
             <Select
@@ -333,6 +362,17 @@ export function QuestionRenderer({
 
       case 'matrix': {
         const opts = getMatrixOptions(options);
+        const rows = opts?.rows || [];
+        const columns = opts?.columns || [];
+
+        if (rows.length === 0 || columns.length === 0) {
+          return (
+            <p className="text-sm text-amber-600 bg-amber-50 border border-amber-200 rounded p-3">
+              ⚠️ This matrix question is not configured properly. It needs both rows and columns.
+            </p>
+          );
+        }
+
         const matrixValues = effectiveValue.matrix_values || {};
 
         const handleMatrixChange = (rowId: string, columnId: string) => {
@@ -345,9 +385,6 @@ export function QuestionRenderer({
         const [focusedCell, setFocusedCell] = useState<{ row: number; col: number } | null>(null);
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const cellRefs = useRef<Map<string, HTMLTableCellElement>>(new Map());
-
-        const rows = opts?.rows || [];
-        const columns = opts?.columns || [];
 
         // Keyboard navigation handler
         // eslint-disable-next-line react-hooks/rules-of-hooks
