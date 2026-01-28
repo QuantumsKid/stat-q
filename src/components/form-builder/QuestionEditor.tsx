@@ -44,7 +44,6 @@ export function QuestionEditor({ question, allQuestions, onUpdate }: QuestionEdi
 
   // Update local state when question changes
   useEffect(() => {
-    console.log('[QuestionEditor] useEffect triggered, updating local state from question:', question.id);
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setTitle(question.title);
     // eslint-disable-next-line react-hooks/set-state-in-effect
@@ -53,7 +52,6 @@ export function QuestionEditor({ question, allQuestions, onUpdate }: QuestionEdi
     setRequired(question.required);
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setOptions(question.options || {});
-    console.log('[QuestionEditor] Set options to:', question.options);
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setLogicRules(question.logic_rules || []);
     // eslint-disable-next-line react-hooks/set-state-in-effect
@@ -75,15 +73,11 @@ export function QuestionEditor({ question, allQuestions, onUpdate }: QuestionEdi
 
   // Handle options updates
   const handleOptionsUpdate = async (newOptions: QuestionOptions) => {
-    console.log('[QuestionEditor] handleOptionsUpdate called with:', newOptions);
     setOptions(newOptions);
-    console.log('[QuestionEditor] Calling updateQuestion with options:', newOptions);
     const result = await updateQuestion(question.id, { options: newOptions });
-    console.log('[QuestionEditor] updateQuestion result:', result);
     if (result.error) {
       toast.error(result.error);
     } else if (result.data) {
-      console.log('[QuestionEditor] Save successful, returned options:', result.data.options);
       onUpdate({ options: result.data.options });
       toast.success('Saved', { duration: 1000 });
     }

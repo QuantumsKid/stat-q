@@ -43,7 +43,6 @@ export const longTextOptionsSchema = z.object({
 export const choiceOptionsSchema = z.object({
   choices: z.array(choiceSchema),
   allowOther: z.boolean().optional(),
-  randomize: z.boolean().optional(),
   randomizeOptions: z.boolean().optional(),
   minSelections: z.number().int().positive().optional(), // For checkboxes
   maxSelections: z.number().int().positive().optional(), // For checkboxes

@@ -235,7 +235,6 @@ export async function addQuestion(formId: string, questionData: Omit<QuestionCre
 }
 
 export async function updateQuestion(questionId: string, updates: QuestionUpdate) {
-  console.log('[updateQuestion] Called with:', { questionId, updates });
   const supabase = await createClient();
   const {
     data: { user },
@@ -257,15 +256,12 @@ export async function updateQuestion(questionId: string, updates: QuestionUpdate
   }
 
   // Validate
-  console.log('[updateQuestion] Validating updates...');
   const validation = questionUpdateSchema.safeParse(updates);
 
   if (!validation.success) {
     console.error('[updateQuestion] Validation failed:', validation.error.issues);
     return { error: validation.error.issues[0].message };
   }
-
-  console.log('[updateQuestion] Validation passed, validated data:', validation.data);
 
   // If updating logic rules, check for circular dependencies
   if (validation.data.logic_rules) {
@@ -295,9 +291,6 @@ export async function updateQuestion(questionId: string, updates: QuestionUpdate
     }
   }
 
-  console.log('[updateQuestion] Updating database with validated data:', validation.data);
-  console.log('[updateQuestion] Options field being sent to DB:', JSON.stringify(validation.data.options));
-
   const { data, error } = await supabase
     .from('questions')
     .update(validation.data)
@@ -306,12 +299,10 @@ export async function updateQuestion(questionId: string, updates: QuestionUpdate
     .single();
 
   if (error) {
-    console.error('[updateQuestion] Error updating question:', error);
+    console.error('Error updating question:', error);
     return { error: 'Failed to update question' };
   }
 
-  console.log('[updateQuestion] Successfully saved to database:', data);
-  console.log('[updateQuestion] Options field returned from DB:', JSON.stringify(data.options));
   revalidatePath(`/forms/${question.form_id}/edit`);
   return { data };
 }
