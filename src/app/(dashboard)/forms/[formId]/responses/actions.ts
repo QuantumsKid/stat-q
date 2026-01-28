@@ -3,6 +3,23 @@
 import { createClient } from '@/utils/supabase/server';
 import type { Response, Answer, ResponseWithAnswers } from '@/lib/types/response.types';
 
+// Helper to map value_json to value for backward compatibility
+function mapAnswerData(answer: Answer): Answer & { value: unknown } {
+  return {
+    ...answer,
+    value: answer.value_json,
+  };
+}
+
+function mapResponseData(response: ResponseData): ResponseData & {
+  answers: Array<Answer & { value: unknown }>;
+} {
+  return {
+    ...response,
+    answers: response.answers.map(mapAnswerData),
+  };
+}
+
 interface ResponseData {
   id: string;
   form_id: string;
@@ -16,7 +33,7 @@ interface ResponseData {
     id: string;
     response_id: string;
     question_id: string;
-    value: unknown;
+    value_json: unknown;
     created_at: string;
     updated_at: string;
   }>;
@@ -50,7 +67,14 @@ export async function getFormResponses(formId: string) {
     .from('responses')
     .select(`
       *,
-      answers (*)
+      answers (
+        id,
+        response_id,
+        question_id,
+        value_json,
+        created_at,
+        updated_at
+      )
     `)
     .eq('form_id', formId)
     .is('deleted_at', null)
@@ -61,7 +85,10 @@ export async function getFormResponses(formId: string) {
     return { error: 'Failed to fetch responses' };
   }
 
-  return { data: responses as unknown as ResponseData[] };
+  // Map value_json to value for backward compatibility
+  const mappedResponses = (responses as unknown as ResponseData[]).map(mapResponseData);
+
+  return { data: mappedResponses };
 }
 
 /**
@@ -81,7 +108,14 @@ export async function getResponseById(responseId: string) {
     .from('responses')
     .select(`
       *,
-      answers (*),
+      answers (
+        id,
+        response_id,
+        question_id,
+        value_json,
+        created_at,
+        updated_at
+      ),
       forms!inner (user_id)
     `)
     .eq('id', responseId)
@@ -102,7 +136,10 @@ export async function getResponseById(responseId: string) {
     return { error: 'Unauthorized' };
   }
 
-  return { data: response as unknown as ResponseData };
+  // Map value_json to value for backward compatibility
+  const mappedResponse = mapResponseData(response as unknown as ResponseData);
+
+  return { data: mappedResponse };
 }
 
 /**
@@ -249,7 +286,12 @@ export async function getAnswersByQuestion(formId: string) {
   const { data: answers, error } = await supabase
     .from('answers')
     .select(`
-      *,
+      id,
+      response_id,
+      question_id,
+      value_json,
+      created_at,
+      updated_at,
       responses!inner (
         is_complete,
         form_id,
@@ -265,15 +307,15 @@ export async function getAnswersByQuestion(formId: string) {
     return { error: 'Failed to fetch answers' };
   }
 
-  // Group answers by question_id
-  const answersByQuestion: Record<string, Answer[]> = {};
+  // Group answers by question_id and map value_json to value
+  const answersByQuestion: Record<string, (Answer & { value: unknown })[]> = {};
 
   (answers as unknown as Array<Answer & { responses: { is_complete: boolean; form_id: string } }>).forEach((answer) => {
     const questionId = answer.question_id;
     if (!answersByQuestion[questionId]) {
       answersByQuestion[questionId] = [];
     }
-    answersByQuestion[questionId].push(answer);
+    answersByQuestion[questionId].push(mapAnswerData(answer));
   });
 
   return { data: answersByQuestion };

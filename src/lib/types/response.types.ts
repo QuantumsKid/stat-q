@@ -14,7 +14,8 @@ export interface Answer {
   id: string;
   response_id: string;
   question_id: string;
-  value: unknown;
+  value_json: unknown;  // Database column name
+  value?: unknown;  // Mapped from value_json for backward compatibility
   created_at: string;
   updated_at: string;
 }
