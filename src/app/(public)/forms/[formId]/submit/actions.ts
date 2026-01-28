@@ -79,10 +79,14 @@ export async function getPublishedForm(formId: string) {
 export async function startResponse(formId: string, respondentEmail?: string, respondentName?: string) {
   const supabase = await createClient();
 
+  // Get current user (if authenticated)
+  const { data: { user } } = await supabase.auth.getUser();
+
   const { data: response, error } = await supabase
     .from('responses')
     .insert({
       form_id: formId,
+      respondent_id: user?.id || null,  // Set respondent_id if user is authenticated
       respondent_email: respondentEmail || null,
       respondent_name: respondentName || null,
       is_complete: false,
