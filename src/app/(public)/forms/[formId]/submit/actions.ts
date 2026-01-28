@@ -139,7 +139,7 @@ export async function saveAnswer(
     const { data, error } = await supabase
       .from('answers')
       .update({
-        value: value as unknown as Record<string, unknown>,
+        value_json: value as unknown as Record<string, unknown>,
         updated_at: new Date().toISOString(),
       })
       .eq('id', existingAnswer.id)
@@ -159,7 +159,7 @@ export async function saveAnswer(
       .insert({
         response_id: responseId,
         question_id: questionId,
-        value: value as unknown as Record<string, unknown>,
+        value_json: value as unknown as Record<string, unknown>,
       })
       .select()
       .single();
