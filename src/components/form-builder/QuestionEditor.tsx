@@ -42,10 +42,9 @@ export function QuestionEditor({ question, allQuestions, onUpdate }: QuestionEdi
     (question.advanced_logic_rules as AdvancedLogicRule[]) || []
   );
 
-  // Update local state when question changes (only when question ID changes)
+  // Update local state when question changes
   useEffect(() => {
-    // Only update state when switching to a different question
-    // This prevents cascading renders on every prop change
+    console.log('[QuestionEditor] useEffect triggered, updating local state from question:', question.id);
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setTitle(question.title);
     // eslint-disable-next-line react-hooks/set-state-in-effect
@@ -54,12 +53,12 @@ export function QuestionEditor({ question, allQuestions, onUpdate }: QuestionEdi
     setRequired(question.required);
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setOptions(question.options || {});
+    console.log('[QuestionEditor] Set options to:', question.options);
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setLogicRules(question.logic_rules || []);
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setAdvancedLogicRules((question.advanced_logic_rules as AdvancedLogicRule[]) || []);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [question.id]); // Only depend on question.id to avoid cascading updates
+  }, [question.id, question.title, question.description, question.required, JSON.stringify(question.options), JSON.stringify(question.logic_rules), JSON.stringify(question.advanced_logic_rules)]);
 
   // Auto-save common fields
   const { isSaving } = useAutosave(
@@ -76,11 +75,15 @@ export function QuestionEditor({ question, allQuestions, onUpdate }: QuestionEdi
 
   // Handle options updates
   const handleOptionsUpdate = async (newOptions: QuestionOptions) => {
+    console.log('[QuestionEditor] handleOptionsUpdate called with:', newOptions);
     setOptions(newOptions);
+    console.log('[QuestionEditor] Calling updateQuestion with options:', newOptions);
     const result = await updateQuestion(question.id, { options: newOptions });
+    console.log('[QuestionEditor] updateQuestion result:', result);
     if (result.error) {
       toast.error(result.error);
     } else if (result.data) {
+      console.log('[QuestionEditor] Save successful, returned options:', result.data.options);
       onUpdate({ options: result.data.options });
       toast.success('Saved', { duration: 1000 });
     }
