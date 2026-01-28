@@ -68,7 +68,7 @@ export function FormRenderer({ form, mode, respondentName, respondentEmail }: Fo
         return () => clearInterval(checkInterval);
       } else {
         // Start a new response
-        const result = await startResponse(form.id, respondentEmail);
+        const result = await startResponse(form.id, respondentEmail, respondentName);
 
         if (result.error) {
           toast.error(result.error);
@@ -95,7 +95,12 @@ export function FormRenderer({ form, mode, respondentName, respondentEmail }: Fo
 
   // Calculate which questions should be hidden based on conditional logic
   const getVisibleQuestions = () => {
-    if (!form.questions) return [];
+    if (!form.questions) {
+      console.log('[FormRenderer] No questions in form');
+      return [];
+    }
+
+    console.log('[FormRenderer] Total questions:', form.questions.length);
 
     // Evaluate simple logic rules
     const allSimpleRules = form.questions.flatMap((q) => q.logic_rules || []);
@@ -110,8 +115,12 @@ export function FormRenderer({ form, mode, respondentName, respondentEmail }: Fo
     // Combine results: merge both hidden sets
     const allHiddenIds = new Set([...hiddenFromSimple, ...advancedResult.hiddenQuestionIds]);
 
+    console.log('[FormRenderer] Hidden question IDs:', Array.from(allHiddenIds));
+
     // Filter out hidden questions
-    return form.questions.filter((q) => !allHiddenIds.has(q.id));
+    const visible = form.questions.filter((q) => !allHiddenIds.has(q.id));
+    console.log('[FormRenderer] Visible questions:', visible.length);
+    return visible;
   };
 
   const visibleQuestions = getVisibleQuestions();

@@ -51,10 +51,14 @@ export async function getPublishedForm(formId: string) {
     .single();
 
   if (error || !form) {
+    console.error('[getPublishedForm] Error or no form found:', error);
     return { error: 'Form not found or not published' };
   }
 
   const formWithQuestions = form as unknown as FormWithQuestionsData;
+
+  console.log('[getPublishedForm] Form fetched:', formWithQuestions.id);
+  console.log('[getPublishedForm] Questions count:', formWithQuestions.questions?.length || 0);
 
   // Sort questions by order_index
   const sortedQuestions = (formWithQuestions.questions || []).sort(
@@ -72,7 +76,7 @@ export async function getPublishedForm(formId: string) {
 /**
  * Start a new response (creates a response record)
  */
-export async function startResponse(formId: string, respondentEmail?: string) {
+export async function startResponse(formId: string, respondentEmail?: string, respondentName?: string) {
   const supabase = await createClient();
 
   const { data: response, error } = await supabase
@@ -80,6 +84,7 @@ export async function startResponse(formId: string, respondentEmail?: string) {
     .insert({
       form_id: formId,
       respondent_email: respondentEmail || null,
+      respondent_name: respondentName || null,
       is_complete: false,
       started_at: new Date().toISOString(),
     })

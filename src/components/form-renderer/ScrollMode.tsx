@@ -33,6 +33,12 @@ export function ScrollMode({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [validationErrors, setValidationErrors] = useState<Record<string, string>>({});
 
+  console.log('[ScrollMode] Rendering with:', {
+    formId: form.id,
+    visibleQuestionsCount: visibleQuestions.length,
+    totalQuestions: form.questions?.length || 0
+  });
+
   const handleAnswerChange = async (questionId: string, value: AnswerValue) => {
     // Update local state
     const newAnswers = { ...answers, [questionId]: value };
@@ -137,23 +143,30 @@ export function ScrollMode({
 
       {/* Questions */}
       <div className="space-y-6">
-        {visibleQuestions.map((question, index) => (
-          <div
-            key={question.id}
-            id={`question-${question.id}`}
-            className="backdrop-blur-sm bg-white/90 rounded-xl border-2 border-slate-200 p-6"
-          >
-            <QuestionRenderer
-              question={question}
-              questionNumber={index + 1}
-              value={answers[question.id]}
-              onChange={(value) => handleAnswerChange(question.id, value)}
-              error={validationErrors[question.id]}
-              advancedLogicResult={advancedLogicResult}
-              formId={form.id} // Pass formId here
-            />
+        {visibleQuestions.length === 0 ? (
+          <div className="backdrop-blur-sm bg-white/90 rounded-xl border-2 border-slate-200 p-8 text-center">
+            <p className="text-slate-600 mb-2">No questions available in this form.</p>
+            <p className="text-sm text-slate-500">The form owner needs to add questions before it can be filled out.</p>
           </div>
-        ))}
+        ) : (
+          visibleQuestions.map((question, index) => (
+            <div
+              key={question.id}
+              id={`question-${question.id}`}
+              className="backdrop-blur-sm bg-white/90 rounded-xl border-2 border-slate-200 p-6"
+            >
+              <QuestionRenderer
+                question={question}
+                questionNumber={index + 1}
+                value={answers[question.id]}
+                onChange={(value) => handleAnswerChange(question.id, value)}
+                error={validationErrors[question.id]}
+                advancedLogicResult={advancedLogicResult}
+                formId={form.id} // Pass formId here
+              />
+            </div>
+          ))
+        )}
       </div>
 
       {/* Submit Button */}

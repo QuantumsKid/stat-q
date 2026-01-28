@@ -158,8 +158,11 @@ export function SingleQuestionMode({
 
   if (!currentQuestion) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <p className="text-slate-600">No questions available</p>
+      <div className="flex items-center justify-center min-h-screen px-4">
+        <div className="backdrop-blur-sm bg-white/90 rounded-xl border-2 border-slate-200 p-8 text-center max-w-md">
+          <p className="text-slate-600 mb-2">No questions available in this form.</p>
+          <p className="text-sm text-slate-500">The form owner needs to add questions before it can be filled out.</p>
+        </div>
       </div>
     );
   }
