@@ -30,14 +30,14 @@ export const shortTextOptionsSchema = z.object({
   placeholder: z.string().optional(),
   maxLength: z.number().positive().optional(),
   validation: z.enum(['email', 'url', 'number']).nullable().optional(),
-});
+}).strict();
 
 // Long text options
 export const longTextOptionsSchema = z.object({
   placeholder: z.string().optional(),
   maxLength: z.number().positive().optional(),
   rows: z.number().positive().int().min(2).max(20).optional(),
-});
+}).strict();
 
 // Choice options (multiple choice, checkboxes, dropdown)
 export const choiceOptionsSchema = z.object({
@@ -93,7 +93,7 @@ export const dateTimeOptionsSchema = z.object({
   minDate: z.string().optional(),
   maxDate: z.string().optional(),
   format: z.string().optional(),
-});
+}).strict();
 
 // File upload options
 export const fileUploadOptionsSchema = z.object({
@@ -152,33 +152,37 @@ export const logicRuleSchema = z.object({
 });
 
 // Question create schema
+// NOTE: Union order matters! Schemas with REQUIRED fields must come first,
+// all-optional schemas come last (they match anything if not strict)
 export const questionCreateSchema = questionBaseSchema.extend({
   form_id: z.string().uuid(),
   order_index: z.number().int().nonnegative(),
   options: z.union([
-    shortTextOptionsSchema,
-    longTextOptionsSchema,
-    choiceOptionsSchema,
-    linearScaleOptionsSchema,
-    matrixOptionsSchema,
-    dateTimeOptionsSchema,
+    choiceOptionsSchema,      // Has required 'choices' field
+    linearScaleOptionsSchema, // Has required 'min' and 'max' fields
+    matrixOptionsSchema,      // Has required 'rows', 'columns', 'type' fields
+    shortTextOptionsSchema,   // All optional (strict mode rejects unknown keys)
+    longTextOptionsSchema,    // All optional (strict mode rejects unknown keys)
+    dateTimeOptionsSchema,    // All optional (strict mode rejects unknown keys)
   ]).optional(),
   logic_rules: z.array(logicRuleSchema).optional(),
 });
 
 // Question update schema (all fields optional except those needed for validation)
+// NOTE: Union order matters! Schemas with REQUIRED fields must come first,
+// all-optional schemas come last (they match anything if not strict)
 export const questionUpdateSchema = z.object({
   title: z.string().min(1, 'Question title is required').max(500, 'Question title is too long').optional(),
   description: z.string().max(1000, 'Description is too long').optional(),
   required: z.boolean().optional(),
   order_index: z.number().int().nonnegative().optional(),
   options: z.union([
-    shortTextOptionsSchema,
-    longTextOptionsSchema,
-    choiceOptionsSchema,
-    linearScaleOptionsSchema,
-    matrixOptionsSchema,
-    dateTimeOptionsSchema,
+    choiceOptionsSchema,      // Has required 'choices' field
+    linearScaleOptionsSchema, // Has required 'min' and 'max' fields
+    matrixOptionsSchema,      // Has required 'rows', 'columns', 'type' fields
+    shortTextOptionsSchema,   // All optional (strict mode rejects unknown keys)
+    longTextOptionsSchema,    // All optional (strict mode rejects unknown keys)
+    dateTimeOptionsSchema,    // All optional (strict mode rejects unknown keys)
   ]).optional(),
   logic_rules: z.array(logicRuleSchema).optional(),
 });

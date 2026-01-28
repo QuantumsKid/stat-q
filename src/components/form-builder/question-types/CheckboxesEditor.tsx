@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
@@ -134,6 +134,7 @@ export function CheckboxesEditor({
   );
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
+  const isFirstRender = useRef(true);
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -146,8 +147,12 @@ export function CheckboxesEditor({
     })
   );
 
-  // Mark as having unsaved changes whenever state changes
+  // Mark as having unsaved changes whenever state changes (skip initial render)
   useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
     setHasUnsavedChanges(true);
   }, [choices, allowOther, randomize, minSelections, maxSelections]);
 
