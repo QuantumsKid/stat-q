@@ -137,6 +137,22 @@ export function CheckboxesEditor({
   const isFirstRender = useRef(true);
   const saveTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
+  // CRITICAL: Sync local state with props when question changes
+  useEffect(() => {
+    const newChoiceOptions = getChoiceOptions(options);
+    setChoices(newChoiceOptions.choices || [
+      { id: '1', label: 'Option 1' },
+      { id: '2', label: 'Option 2' },
+      { id: '3', label: 'Option 3' },
+    ]);
+    setAllowOther(newChoiceOptions.allowOther || false);
+    setRandomize(newChoiceOptions.randomizeOptions || false);
+    setMinSelections(newChoiceOptions.minSelections?.toString() || '');
+    setMaxSelections(newChoiceOptions.maxSelections?.toString() || '');
+    setHasUnsavedChanges(false);
+    isFirstRender.current = true;
+  }, [options]);
+
   const sensors = useSensors(
     useSensor(PointerSensor, {
       activationConstraint: {

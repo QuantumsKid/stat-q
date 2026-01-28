@@ -137,6 +137,21 @@ export function MatrixEditor({ options, onUpdate }: MatrixEditorProps) {
     useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates })
   );
 
+  // CRITICAL: Sync local state with props when question changes
+  useEffect(() => {
+    const newMatrixOptions = getMatrixOptions(options);
+    setRows(newMatrixOptions.rows || [
+      { id: '1', label: 'Row 1' },
+      { id: '2', label: 'Row 2' },
+    ]);
+    setColumns(newMatrixOptions.columns || [
+      { id: '1', label: 'Column 1' },
+      { id: '2', label: 'Column 2' },
+    ]);
+    setType(newMatrixOptions.type || 'radio');
+    setRequiredRows(newMatrixOptions.requiredRows || []);
+  }, [options]);
+
   // Update parent when local state changes
   useEffect(() => {
     const timer = setTimeout(() => {

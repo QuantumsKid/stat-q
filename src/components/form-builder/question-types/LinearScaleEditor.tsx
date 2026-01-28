@@ -25,6 +25,16 @@ export function LinearScaleEditor({
   const [maxLabel, setMaxLabel] = useState(scaleOptions.maxLabel || '');
   const [step, setStep] = useState<string>(scaleOptions.step?.toString() || '1');
 
+  // CRITICAL: Sync local state with props when question changes
+  useEffect(() => {
+    const newScaleOptions = getLinearScaleOptions(options);
+    setMin(newScaleOptions.min?.toString() || '1');
+    setMax(newScaleOptions.max?.toString() || '5');
+    setMinLabel(newScaleOptions.minLabel || '');
+    setMaxLabel(newScaleOptions.maxLabel || '');
+    setStep(newScaleOptions.step?.toString() || '1');
+  }, [options]);
+
   // Validate step immediately - must divide the range evenly
   const validateStep = (minVal: number, maxVal: number, stepVal: number): boolean => {
     if (stepVal < 1) return false;
