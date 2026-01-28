@@ -34,7 +34,15 @@
       "Bash(npx tsc:*)",
       "Bash(git diff:*)",
       "Bash(git push)",
-      "Bash(grep:*)"
+      "Bash(grep:*)",
+      "Bash(netstat:*)",
+      "Bash(findstr:*)",
+      "Bash(xargs:*)",
+      "Bash(vercel --version:*)",
+      "Bash(dir \"C:\\\\Users\\\\rinai\\\\stat-q\\\\src\\\\Questionnaires\")",
+      "Bash(python:*)",
+      "Bash(pip install:*)",
+      "Bash(node:*)"
     ]
   }
 }

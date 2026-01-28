@@ -130,6 +130,7 @@ export function MultipleChoiceEditor({
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const isFirstRender = useRef(true);
+  const saveTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -142,16 +143,51 @@ export function MultipleChoiceEditor({
     })
   );
 
-  // Mark as having unsaved changes whenever state changes (skip initial render)
+  // Auto-save after 1 second of inactivity
   useEffect(() => {
     if (isFirstRender.current) {
       isFirstRender.current = false;
       return;
     }
+
     setHasUnsavedChanges(true);
+
+    // Clear any existing timeout
+    if (saveTimeoutRef.current) {
+      clearTimeout(saveTimeoutRef.current);
+    }
+
+    // Set new timeout to auto-save
+    saveTimeoutRef.current = setTimeout(() => {
+      handleSave();
+    }, 1000);
+
+    // Cleanup on unmount or before next effect
+    return () => {
+      if (saveTimeoutRef.current) {
+        clearTimeout(saveTimeoutRef.current);
+      }
+    };
   }, [choices, allowOther, randomize]);
 
+  // Save immediately when component unmounts (switching questions)
+  useEffect(() => {
+    return () => {
+      if (hasUnsavedChanges) {
+        // Save immediately without waiting
+        const newOptions: ChoiceOptions = {
+          choices,
+          allowOther,
+          randomizeOptions: randomize,
+        };
+        onUpdate(newOptions);
+      }
+    };
+  }, []);
+
   const handleSave = async () => {
+    if (isSaving) return; // Prevent concurrent saves
+
     setIsSaving(true);
     const newOptions: ChoiceOptions = {
       choices,
@@ -159,9 +195,14 @@ export function MultipleChoiceEditor({
       randomizeOptions: randomize,
     };
 
-    await onUpdate(newOptions);
-    setHasUnsavedChanges(false);
-    setIsSaving(false);
+    try {
+      await onUpdate(newOptions);
+      setHasUnsavedChanges(false);
+    } catch (error) {
+      console.error('Error saving options:', error);
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   const handleDragEnd = (event: DragEndEvent) => {

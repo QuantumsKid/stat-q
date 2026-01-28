@@ -1,0 +1,118 @@
+=== PARAGRAPHS ===
+Pyetësor Gjithëpërfshirës për Vlerësimin e Nevojave për Pajisje për Policinë e Kosovës
+Qëllimi i vlerësimit: Qëllimi i këtij pyetësori është të vlerësojë paraprakisht nevojat ekzistuese për pajisje të Policisë së Kosovës, veçanërisht në lidhje me hetimet që kanë të bëjnë me krime të rënda të organizuara, hyrjet e fshehta dhe operacionet e fshehta. Qëllimi i këtij pyetësori është të mbledhë informata të detajuara lidhur me pajisjet aktuale, çfarëdo mangësie në burime dhe nevojat specifike teknike që lidhen me operacionet e PK-së, përpara financimit të ardhshëm dhe përpjekjeve për ngritje të kapaciteteve. Ky pyetësor është hartuar për të vlerësuar nevojat aktuale dhe të ardhshme të Policisë së Kosovës në aspektin e pajisjeve për forcimin e kapaciteteve të saj operacionale.
+Ju lutemi jepni përgjigje të hollësishme për secilën pjesë, duke përjashtuar ndonjë pajisje që tashmë është buxhetuar, premtuar ose zotuar, ose që  është paraparë të sigurohet nga organizata tjera ndërkombëtare, projekte të financuara nga donatorët, ambasadat ose buxheti i PK-së. Nëse pajisjet janë tashmë të siguruara përmes burimeve të tjera, ju lutemi mos i përfshini në këtë pyetësor.
+Duke vlerësuar disponueshmërinë dhe gjendjen e mjeteve ekzistuese, si dhe duke identifikuar nevojat shtesë me prioritet të lartë, ky pyetësor do të ndihmojë në:
+Identifikimin e besueshmërisë, disponueshmërisë, mirëmbajtjes dhe sigurisë së pajisjeve aktuale në operacionet e PK-së.
+Identifikimin e mungesave ekzistuese dhe afatmesme deri në afatgjata në aspektin e pajisjeve.
+Përshtatjen e financimeve të ardhshme (nga BE-ja dhe donatorë të tjerë), trajnimeve dhe nismave për ngritjen e kapaciteteve me qëllim adresimin e mangësive të identifikuara dhe optimizimin e efektivitetit operacional dhe hetimor.
+Sigurimin që pajisjet e kërkuara janë në përputhje me objektivat strategjike të Policisë së Kosovës dhe që nuk janë të mbuluara tashmë nga burime të tjera financimi.
+Mundësimin e shpërndarjes efikase të resurseve, përfshirë ato nga BE-ja dhe donatorët e tjerë, duke i dhënë përparësi nevojave më kritike për pajisje.
+Përafrimin e pritshmërive të palëve të interesuara për prokurimin dhe shpërndarjen e resurseve me kërkesat operacionale të Policisë së Kosovës.
+Udhëzim: Ju lutemi sigurohuni që pyetësori të plotësohet sa më qartë nga personeli i caktuar i Policisë së Kosovës, me informacion dhe ekspertizë të nevojshme në hetime dhe prokurim. Përdorni faqe shtesë nëse hapësira e dhënë nuk mjafton. Për shpjegime të mëtejshme, ju lutemi dërgoni email në: ilir.bicja@hape-kosovo.eu
+INFORMATA TË PËRGJITHSHME
+Data e vlerësimit:  30/10/2025
+Emri i zyrtarit: Laura Ahmeti
+Grada/Pozita: Kapiten, Shef i Sektorit për fotografi video analize dhe ekzaminime te TI-se
+Departamenti/Njësia: Depertamenti i Hetimeve/ Divizioni për Mbështetje te Hetimeve/ Drejtoria e Teknikes Kriminalistike
+2: Disponueshmëria dhe gjendja aktuale e pajisjeve
+Si do të vlerësonit përshtatshmërinë e pajisjeve tuaja aktuale për kryerjen e detyrave ditore?
+☐ Shumë e përshtatshme
+☐ E përshtatshme
+☐ Disi e përshtatshme
+☐ E papërshtatshme
+Cilat kategori të pajisjeve janë më kritike për punën tuaj? (Zgjidhni të gjitha që aplikohen)
+☐ Pajisje personale mbrojtëse (helmeta, jelekë, mburoja, etj.)
+☐ Armë dhe municion
+☐ Pajisje komunikimi (radio, sisteme mobile, rrjete të sigurta)
+☐ Logjistikë & Automjete (vetura patrullimi, motoçikleta, automjete të blinduara)
+☐ Pajisje për mbikëqyrje dhe monitorim (CCTV, dronë, pajisje për shikim natën)
+☐ Pajisje TIK dhe mjete për forenzikë digjitale
+☐ Pajisje për mbledhjen e provave dhe hetime
+☐ Pajisje për kontrollin e turmave (armë jo-vdekjeprurëse, gaz lotsjellës, etj.)
+☐ Tjera: _______________________________
+Cila është gjendja aktuale e pajisjeve në njësinë tuaj?
+☐ Shkëlqyeshme (moderne, plotësisht funksionale)
+☐ Mirë (me kufizime të vogla)
+☐ Mesatare (defekte të shpeshta, të vjetruara)
+☐ Dobët (kryesisht të papërdorshme ose të pasigurta)
+Sa shpesh dështimi ose mungesa e pajisjeve ndikon në aftësinë tuaj për të kryer detyrat?
+☐ Rrallë
+☐ Herë pas here
+☐ Shpesh
+☐ Pothuajse gjithmonë
+Pjesa 3: Mangësitë në Pajisje
+Çfarë lloj pajisjesh mungojnë aktualisht në njësinë tuaj?
+PC
+ThinkPad P16 Gen 2 Intel (16″) Mobile Workstation
+Duke parë përpara, cilat pajisje do të jenë më kritike për departamentin tuaj gjatë 1–5 viteve të ardhshme? (Renditni 5 më të rëndësishmet)
+Specifikimet e Pajisjeve
+Për secilin artikull të listuar, ju lutemi jepni detajet e mëposhtme:
+Artikulli 1: Grey key
+Qëllimi:     Harduer dhe softuer për mobile forensics
+Specifikimet ose karakteristikat e kërkuara:  GrayKey është një harduer dhe softuer i specializuar që përdoret për të hyrë në pajisjet iPhone (dhe ndonjëherë edhe pajisje të tjera), edhe kur ato janë të bllokuara me kod sigurie. Analizë forenzike – ndihmon ekspertët të analizojnë të dhënat në mënyrë ligjore.
+Kosto e parashikuar:_ 100,000 euro _______________________________________________________________
+Sasia e nevojshme: _1 (Nje) ________________________________________________________________
+Artikulli 2: TALINIO KA-301 Fortensic Workstation
+Qëllimi: TALINO KA-301 është një workstation (stacion pune kompjuterik) i specializuar për forenzikë digjitale — pra për ekzaminime të pajisjeve elektronike, përpunim të të dhënave provuese,
+Specifikimet ose karakteristikat e kërkuara:______________________________________________
+Kosto e parashikuar: 50.000 euro ____________________________________________________
+Sasia e nevojshme: 2________________________________________________________________
+Artikulli 3: TALINO KA-VIZ - Forensic Video Analysis Workstation
+Qëllimi: Rrjeti duhet të jetë i izoluar, i monitoruar dhe i mbrojtur.
+Specifikimet ose karakteristikat e kërkuara: Qëllimi: TALINO KA-301 është një workstation (stacion pune kompjuterik) i specializuar për forenzikë digjitale — pra për ekzaminime të video analizave forenzike , përpunim të të dhënave provuese
+Kosto e parashikuar: 50.000 euro ____________________________________________________
+Sasia e nevojshme: 2 _________________________________________________
+Artikulli 4: TALINO KA-Ultra - 700TB Storage
+Qëllimi: Pajisje për ruajtjen e të dhënave
+Specifikimet ose karakteristikat e kërkuara: TALINO KA-Ultra është një server/pajisje “desk-mounted” (në tavolinë / në kabinet kompjuteri) i dizajnuar për kapacitete shumë të mëdha ruajtjeje — në këtë rast, rreth 704 TB hapësirë të papërpunuar (raw storage) në konfigurimin bazë.
+Kosto e parashikuar: 20.000 mij euro _________________________________________________
+Sasia e nevojshme: _________________________________________________________________
+Artikulli 5:
+Qëllimi:
+Specifikimet ose karakteristikat e kërkuara:______________________________________________
+Kosto e parashikuar:________________________________________________________________
+Sasia e nevojshme: _________________________________________________________________
+(Vazhdoni për artikujt e tjerë sipas nevojës)
+Vlerësimi i Efektivitetit dhe Ndikimit
+Ju lutemi përshkruani shkurtimisht me fjalët tuaja se si prokurimi i këtyre mallrave do të përmirësojë efektivitetin dhe operacionet e Policisë së Kosovës ose të departamentit tuaj (p.sh. kohë më e shpejtë reagimi, mbledhja e provave, mbrojtje personale, mbledhja e inteligjencës, etj.):
+Afati kohor
+Cili është afati kohor për sigurimin e këtyre pajisjeve?
+☐ Afat i shkurtër (6 muaj – 1 vit)
+☐ Afat mesëm (1–2 vite)
+☐ Afat i gjatë (më shumë se 2 vite)
+Vlerësimi i Rrezikut dhe Pajtueshmëria
+Cilat janë rreziqet kryesore që lidhen me këtë proces prokurimi dhe si do të parandalohen ato:
+☐ Rreziqet Operacionale dhe të Mirëmbajtjes (p.sh., vonesa, keqpërdorim)
+☐ Rreziqet e sigurisë (p.sh., trajtimi i pajisjeve të ndjeshme)
+☐ Çështjet e pajtueshmërisë ligjore ose rregullatore (p.sh., kontrollet e eksportit, teknologjia e klasifikuar)
+☐ Rreziqet e Furnitorëve ose Etike (p.sh., konflikte interesi me furnitor, korrupsioni, problemet e furnizimit)
+☐ Tjera (ju lutemi specifikoni): ___________________________
+Trajnimi dhe Ngritja e Kapaciteteve
+A ka nevojë departamenti juaj për trajnim të specializuar ose ngritje të kapaciteteve? (ju lutemi listoni)
+Grey Key - Certification
+MSAB XRY – Certification
+MAGNET AXIOM - Certification  AX 150  AX 220  Ax 250  Ax 300
+Forensic Video Analysis & The Law
+Advanced Forensic Video Interrogations: An In-Depth Examination of Video Analysis Processes
+Komente ose Informacion Shtesë
+(Jepni çdo informacion shtesë relevant ose kërkesa specifike lidhur me prokurimin e pajisjeve/mallrave)
+Ju faleminderit!
+Ekipi i projektit HAPE
+
+=== TABLES ===
+MOHIM PËRGJEGJËSIE: Ky pyetësor ka për qëllim vlerësimin e nevojave ekzistuese dhe të ardhshme për pajisje të Policisë së Kosovës. Ju lutemi vini re se çdo mbështetje ose prokurim i mundshëm i mallrave përmes projektit HAPE është i kushtëzuar nga heqja e sanksioneve nga Bashkimi Evropian ndaj Kosovës dhe brenda kufijve të financimit të projektit HAPE. Gjithashtu, të gjitha aktivitetet e prokurimit janë subjekt i përputhshmërisë me kornizën ligjore dhe rregullative të Bashkimit Evropian, dhe asnjë prokurim nuk do të realizohet nëse nuk është në përputhje me këto korniza.
+TALINIO KA-301 Fortensic Workstation | TALINIO KA-301 Fortensic Workstation | TALINIO KA-301 Fortensic Workstation | TALINIO KA-301 Fortensic Workstation
+TALINO KA-VIZ - Forensic Video Analysis Workstation | TALINO KA-VIZ - Forensic Video Analysis Workstation | TALINO KA-VIZ - Forensic Video Analysis Workstation
+TALINO KA-Ultra - 700TB Storage 
+Grey key | TALINO KA-Ultra - 700TB Storage 
+Grey key
+ClonerAlliance ViewPRO
+Daetech Systems - Forensic Video analyses and Forensic Image Authentication - Cognitech TriSuite 64 Software including FiA (Cognitech Forensic Image Authenticate) | Daetech Systems - Forensic Video analyses and Forensic Image Authentication - Cognitech TriSuite 64 Software including FiA (Cognitech Forensic Image Authenticate) | Daetech Systems - Forensic Video analyses and Forensic Image Authentication - Cognitech TriSuite 64 Software including FiA (Cognitech Forensic Image Authenticate) | Daetech Systems - Forensic Video analyses and Forensic Image Authentication - Cognitech TriSuite 64 Software including FiA (Cognitech Forensic Image Authenticate) | Daetech Systems - Forensic Video analyses and Forensic Image Authentication - Cognitech TriSuite 64 Software including FiA (Cognitech Forensic Image Authenticate)
+Grey key 
+TALINIO KA-301 Forensic Workstation | Grey key 
+TALINIO KA-301 Forensic Workstation | Grey key 
+TALINIO KA-301 Forensic Workstation
+TALINO KA-VIZ - Forensic Video Analysis Workstation | TALINO KA-VIZ - Forensic Video Analysis Workstation
+TALINO KA-Ultra - 700TB Storage
+Përshpejtim i hetimeve dhe reagimit, mbledhje dhe ruajtje më efikase e provave, rritje e kapaciteteve forenzike digjitale, mbrojtje e provave dhe siguri operative, përputhshmëri ligjore dhe profesionalizëm, mbështetje për bashkëpunim ndër-institucional etj

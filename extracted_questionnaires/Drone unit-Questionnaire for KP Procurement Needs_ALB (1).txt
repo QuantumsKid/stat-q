@@ -1,0 +1,98 @@
+=== PARAGRAPHS ===
+Pyetësor Gjithëpërfshirës për Vlerësimin e Nevojave për Pajisje për Policinë e Kosovës
+Qëllimi i vlerësimit: Qëllimi i këtij pyetësori është të vlerësojë paraprakisht nevojat ekzistuese për pajisje të Policisë së Kosovës, veçanërisht në lidhje me hetimet që kanë të bëjnë me krime të rënda të organizuara, hyrjet e fshehta dhe operacionet e fshehta. Qëllimi i këtij pyetësori është të mbledhë informata të detajuara lidhur me pajisjet aktuale, çfarëdo mangësie në burime dhe nevojat specifike teknike që lidhen me operacionet e PK-së, përpara financimit të ardhshëm dhe përpjekjeve për ngritje të kapaciteteve. Ky pyetësor është hartuar për të vlerësuar nevojat aktuale dhe të ardhshme të Policisë së Kosovës në aspektin e pajisjeve për forcimin e kapaciteteve të saj operacionale.
+Ju lutemi jepni përgjigje të hollësishme për secilën pjesë, duke përjashtuar ndonjë pajisje që tashmë është buxhetuar, premtuar ose zotuar, ose që  është paraparë të sigurohet nga organizata tjera ndërkombëtare, projekte të financuara nga donatorët, ambasadat ose buxheti i PK-së. Nëse pajisjet janë tashmë të siguruara përmes burimeve të tjera, ju lutemi mos i përfshini në këtë pyetësor.
+Duke vlerësuar disponueshmërinë dhe gjendjen e mjeteve ekzistuese, si dhe duke identifikuar nevojat shtesë me prioritet të lartë, ky pyetësor do të ndihmojë në:
+Identifikimin e besueshmërisë, disponueshmërisë, mirëmbajtjes dhe sigurisë së pajisjeve aktuale në operacionet e PK-së.
+Identifikimin e mungesave ekzistuese dhe afatmesme deri në afatgjata në aspektin e pajisjeve.
+Përshtatjen e financimeve të ardhshme (nga BE-ja dhe donatorë të tjerë), trajnimeve dhe nismave për ngritjen e kapaciteteve me qëllim adresimin e mangësive të identifikuara dhe optimizimin e efektivitetit operacional dhe hetimor.
+Sigurimin që pajisjet e kërkuara janë në përputhje me objektivat strategjike të Policisë së Kosovës dhe që nuk janë të mbuluara tashmë nga burime të tjera financimi.
+Mundësimin e shpërndarjes efikase të resurseve, përfshirë ato nga BE-ja dhe donatorët e tjerë, duke i dhënë përparësi nevojave më kritike për pajisje.
+Përafrimin e pritshmërive të palëve të interesuara për prokurimin dhe shpërndarjen e resurseve me kërkesat operacionale të Policisë së Kosovës.
+Udhëzim: Ju lutemi sigurohuni që pyetësori të plotësohet sa më qartë nga personeli i caktuar i Policisë së Kosovës, me informacion dhe ekspertizë të nevojshme në hetime dhe prokurim. Përdorni faqe shtesë nëse hapësira e dhënë nuk mjafton. Për shpjegime të mëtejshme, ju lutemi dërgoni email në: ilir.bicja@hape-kosovo.eu
+INFORMATA TË PËRGJITHSHME
+Data e vlerësimit:  27.10.2025
+Emri i zyrtarit: Muhamet Rushiti
+Grada/Pozita: Kapiten, Drejtor i Njesive Ajrore
+Departamenti/Njësia: Departamenti i Njesive Speciale/ Drejtoria e Njesive ajrore/Njesia per Dron dhe Antidron
+2: Disponueshmëria dhe gjendja aktuale e pajisjeve
+Si do të vlerësonit përshtatshmërinë e pajisjeve tuaja aktuale për kryerjen e detyrave ditore?
+☐ Shumë e përshtatshme
+☐ E përshtatshme
+☐ Disi e përshtatshme
+X E papërshtatshme
+Cilat kategori të pajisjeve janë më kritike për punën tuaj? (Zgjidhni të gjitha që aplikohen)
+☐ Pajisje personale mbrojtëse (helmeta, jelekë, mburoja, etj.)
+☐ Armë dhe municion
+X Pajisje komunikimi (radio, sisteme mobile, rrjete të sigurta)
+☐ Logjistikë & Automjete (vetura patrullimi, motoçikleta, automjete të blinduara)
+X Pajisje për mbikëqyrje dhe monitorim (CCTV, dronë, pajisje për shikim natën)
+X Pajisje TIK dhe mjete për forenzikë digjitale
+☐ Pajisje për mbledhjen e provave dhe hetime
+☐ Pajisje për kontrollin e turmave (armë jo-vdekjeprurëse, gaz lotsjellës, etj.)
+XTjera: _Dron dhe pajisje Kunder-Dron_________________________
+Cila është gjendja aktuale e pajisjeve në njësinë tuaj?
+☐ Shkëlqyeshme (moderne, plotësisht funksionale)
+☐ Mirë (me kufizime të vogla)
+X  Mesatare (defekte të shpeshta, të vjetruara)
+☐ Dobët (kryesisht të papërdorshme ose të pasigurta)
+Sa shpesh dështimi ose mungesa e pajisjeve ndikon në aftësinë tuaj për të kryer detyrat?
+☐ Rrallë
+☐ Herë pas here
+X  Shpesh
+☐ Pothuajse gjithmonë
+Pjesa 3: Mangësitë në Pajisje
+Çfarë lloj pajisjesh mungojnë aktualisht në njësinë tuaj?
+Dronë me kamera të avancuara
+Monitorë të mëdhenj ose konfigurime me shumë ekrane
+Disqe të enkriptuara portative  SD CART te enkriptuara
+Duke parë përpara, cilat pajisje do të jenë më kritike për departamentin tuaj gjatë 1–5 viteve të ardhshme? (Renditni 5 më të rëndësishmet)
+Drone
+Antidron
+Kartela te enkriptuara SD CARD
+Specifikimet e Pajisjeve
+Për secilin artikull të listuar, ju lutemi jepni detajet e mëposhtme:
+Artikulli 1: Drone
+Qëllimi:     Vezhgimi, ISR, Mbikqyrje te manifestimeve ne kohe reale etj...
+Specifikimet ose karakteristikat e kërkuara: Drone Me Shikim Termal DJI Matrice 4TD
+Kosto e parashikuar:110,000-120,000  Euro
+Sasia e nevojshme: 12 cope
+Artikulli 2: Antidrone
+Qëllimi: Pajisje për Mbrojtje Kunder Droneve tjere te pautorizuar
+Specifikimet ose karakteristikat e kërkuara:Antidron Taktik dore
+Kosto e parashikuar:100,000  euro
+Sasia e nevojshme: 2 cope
+Artikulli 3: Kartela SD te encriptuara
+Qëllimi: Enkryptim te video-Imazheve ne dron
+Specifikimet ose karakteristikat e kërkuara:SD te encriptuara
+Kosto e parashikuar:_2500
+Sasia e nevojshme:  _12 cope
+(Vazhdoni për artikujt e tjerë sipas nevojës)
+Vlerësimi i Efektivitetit dhe Ndikimit
+Ju lutemi përshkruani shkurtimisht me fjalët tuaja se si prokurimi i këtyre mallrave do të përmirësojë efektivitetin dhe operacionet e Policisë së Kosovës ose të departamentit tuaj (p.sh. kohë më e shpejtë reagimi, mbledhja e provave, mbrojtje personale, mbledhja e inteligjencës, etj.):
+Afati kohor
+Cili është afati kohor për sigurimin e këtyre pajisjeve?
+X Afat i shkurtër (6 muaj – 1 vit)
+☐ Afat mesëm (1–2 vite)
+☐ Afat i gjatë (më shumë se 2 vite)
+Vlerësimi i Rrezikut dhe Pajtueshmëria
+Cilat janë rreziqet kryesore që lidhen me këtë proces prokurimi dhe si do të parandalohen ato:
+☐ Rreziqet Operacionale dhe të Mirëmbajtjes (p.sh., vonesa, keqpërdorim)
+☐ Rreziqet e sigurisë (p.sh., trajtimi i pajisjeve të ndjeshme)
+X Çështjet e pajtueshmërisë ligjore ose rregullatore (p.sh., kontrollet e eksportit, teknologjia e klasifikuar)
+☐ Rreziqet e Furnitorëve ose Etike (p.sh., konflikte interesi me furnitor, korrupsioni, problemet e furnizimit)
+☐ Tjera (ju lutemi specifikoni): ___________________________
+Trajnimi dhe Ngritja e Kapaciteteve
+A ka nevojë departamenti juaj për trajnim të specializuar ose ngritje të kapaciteteve? (ju lutemi listoni)
+Trajnime per Antidron
+Trajnime per Trajner te Trajnerve per Operator/Pilot
+Komente ose Informacion Shtesë
+(Jepni çdo informacion shtesë relevant ose kërkesa specifike lidhur me prokurimin e pajisjeve/mallrave)
+Ju faleminderit!
+Ekipi i projektit HAPE
+
+=== TABLES ===
+MOHIM PËRGJEGJËSIE: Ky pyetësor ka për qëllim vlerësimin e nevojave ekzistuese dhe të ardhshme për pajisje të Policisë së Kosovës. Ju lutemi vini re se çdo mbështetje ose prokurim i mundshëm i mallrave përmes projektit HAPE është i kushtëzuar nga heqja e sanksioneve nga Bashkimi Evropian ndaj Kosovës dhe brenda kufijve të financimit të projektit HAPE. Gjithashtu, të gjitha aktivitetet e prokurimit janë subjekt i përputhshmërisë me kornizën ligjore dhe rregullative të Bashkimit Evropian, dhe asnjë prokurim nuk do të realizohet nëse nuk është në përputhje me këto korniza.
+Drejtoria e Njesive Ajrore si drejtori e re ka filluar ngritjen e kapaciteteve operacionale dhe trajnuese.
+Ne me perfitimin e trajnimit per Operator/Pilot dhe Trajner te Trajnerve per Dron nga projekti HAPE i BE, synojme qe te krijojme qendren trajnuese per Policine e Kosoves dhe institucionet tjera relevante te sigurise me qellim te trajnimit te Zyrtareve te rinje ne menyre profesionale dhe te sigurt duke marre praktikat me te mira te shteteve te BE respektivisht Akademise Policore Franceze.
+Gjithashtu NJDA (Njesia per Dron dhe Antidron) do te asistoj njesite tjera brenda Policise se Kosoves ne sherbimet e Droneve dhe Antidroneve ne operacionet e tyre.
