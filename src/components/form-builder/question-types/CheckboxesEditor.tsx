@@ -132,6 +132,8 @@ export function CheckboxesEditor({
   const [maxSelections, setMaxSelections] = useState<string>(
     choiceOptions.maxSelections?.toString() || ''
   );
+  const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -144,22 +146,25 @@ export function CheckboxesEditor({
     })
   );
 
-  // Update parent when local state changes
+  // Mark as having unsaved changes whenever state changes
   useEffect(() => {
-    const timer = setTimeout(() => {
-      const newOptions: ChoiceOptions = {
-        choices,
-        allowOther,
-        randomizeOptions: randomize,
-        minSelections: minSelections ? parseInt(minSelections, 10) : undefined,
-        maxSelections: maxSelections ? parseInt(maxSelections, 10) : undefined,
-      };
-
-      onUpdate(newOptions);
-    }, 500);
-
-    return () => clearTimeout(timer);
+    setHasUnsavedChanges(true);
   }, [choices, allowOther, randomize, minSelections, maxSelections]);
+
+  const handleSave = async () => {
+    setIsSaving(true);
+    const newOptions: ChoiceOptions = {
+      choices,
+      allowOther,
+      randomizeOptions: randomize,
+      minSelections: minSelections ? parseInt(minSelections, 10) : undefined,
+      maxSelections: maxSelections ? parseInt(maxSelections, 10) : undefined,
+    };
+
+    await onUpdate(newOptions);
+    setHasUnsavedChanges(false);
+    setIsSaving(false);
+  };
 
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
@@ -294,6 +299,26 @@ export function CheckboxesEditor({
           checked={randomize}
           onCheckedChange={setRandomize}
         />
+      </div>
+
+      {/* Save Button */}
+      <div className="flex items-center justify-between pt-4 border-t border-slate-200">
+        <div>
+          {hasUnsavedChanges && !isSaving && (
+            <p className="text-sm text-amber-600">Unsaved changes</p>
+          )}
+          {isSaving && (
+            <p className="text-sm text-blue-600">Saving...</p>
+          )}
+        </div>
+        <Button
+          onClick={handleSave}
+          disabled={!hasUnsavedChanges || isSaving}
+          type="button"
+          size="sm"
+        >
+          {isSaving ? 'Saving...' : 'Save Options'}
+        </Button>
       </div>
 
       {/* Preview */}

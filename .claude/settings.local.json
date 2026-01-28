@@ -29,7 +29,8 @@
       "Bash(set VERCEL_TOKEN=yhyfDnCAXvFKoCpImc7EQm3X)",
       "Bash(vercel:*)",
       "Bash(printf:*)",
-      "Bash(if exist .next rmdir /s /q .next)"
+      "Bash(if exist .next rmdir /s /q .next)",
+      "Bash(it doesn't work, as soon as I refresh or get out the question, \nthere's nothing there\"\n\nTHE PROBLEM:\n500ms debounce auto-save was too unreliable:\n- Users navigating away before debounce fires\n- No clear feedback when saving\n- No way to force immediate save\n\nTHE SOLUTION:\nRemoved debounce entirely and added manual Save buttons to:\n- CheckboxesEditor\n- MultipleChoiceEditor  \n- DropdownEditor\n\nFeatures:\n- Clear \"Unsaved changes\" indicator\n- \"Saving...\" feedback during save\n- Button disabled until changes made\n- Button disabled while saving\n- Immediate save when clicked\n\nThis gives users full control over when options are saved\nand provides clear visual feedback throughout the process.\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>\nEOF\n)\")"
     ]
   }
 }
