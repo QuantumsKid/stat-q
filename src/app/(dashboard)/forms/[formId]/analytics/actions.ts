@@ -353,7 +353,6 @@ export async function getPaginatedResponses(
         is_flagged
       `)
       .eq('form_id', formId)
-      .is('deleted_at', null)
       .order(sortBy, { ascending: sortOrder === 'asc' })
       .limit(limit + 1); // Fetch one extra to determine if there are more
 

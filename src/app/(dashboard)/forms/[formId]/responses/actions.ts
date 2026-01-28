@@ -77,8 +77,7 @@ export async function getFormResponses(formId: string) {
       )
     `)
     .eq('form_id', formId)
-    .is('deleted_at', null)
-    .order('created_at', { ascending: false });
+        .order('created_at', { ascending: false });
 
   if (error) {
     console.error('Error fetching responses:', error);
@@ -295,8 +294,7 @@ export async function getAnswersByQuestion(formId: string) {
       responses!inner (
         is_complete,
         form_id,
-        deleted_at
-      )
+              )
     `)
     .eq('responses.form_id', formId)
     .eq('responses.is_complete', true)
